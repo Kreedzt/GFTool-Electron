@@ -1,12 +1,112 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem } = require('electron');
 const path = require('path');
+const { testReq } = require('./utils/http');
+const { isMacOS } = require('./utils/checkOS');
 
-let win;
+let mainWindow = null;
 
-const targetPATH = `file://${path.join(__dirname, '../public/pages/index.html')}`;
+const targetPATH = `file://${path.join(
+  __dirname,
+  '../public/pages/index.html'
+)}`;
+
+const menuTemplate = [
+  {
+    label: 'Test',
+    subMenu: [
+      {
+        label: 'Reload',
+        accelerator: 'CmdOrCtrl+L',
+        click: () => {
+          console.log('Triggered click');
+          testReq();
+        }
+      }
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      {
+        label: 'Reload',
+        accelerator: 'CmdOrCtrl+R',
+        click: (item, focusedWindow) => {
+          if (focusedWindow) {
+            // on reload, start fresh and close any old
+            // open secondary windows
+            if (focusedWindow.id === 1) {
+              BrowserWindow.getAllWindows().forEach(win => {
+                if (win.id > 1) win.close();
+              });
+            }
+            focusedWindow.reload();
+          }
+        }
+      },
+      {
+        label: 'Toggle Full Screen',
+        accelerator: (() => {
+          if (isMacOS()) {
+            return 'Ctrl+Command+F';
+          }
+          return 'F11';
+        })(),
+        click: (item, focusedWindow) => {
+          if (focusedWindow) {
+            focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
+          }
+        }
+      },
+      {
+        label: 'Toggle Developer Tools',
+        accelerator: (() => {
+          if (isMacOS()) {
+            return 'Alt+Command+I';
+          }
+          return 'Ctrl+Shift+I';
+        })(),
+        click: (item, focusedWindow) => {
+          if (focusedWindow) {
+            focusedWindow.toggleDevTools();
+          }
+        }
+      }
+    ]
+  }
+];
+
+// Make this app a single instance app.
+//
+// The main window will be restored and focused instead of a second window
+// opened when a person attempts to launch a second instance.
+//
+// Returns true if the current version of the app should quit instead of
+// launching.
+function makeSingleInstance() {
+  if (process.mas) return;
+
+  app.requestSingleInstanceLock();
+
+  app.on('second-instance', () => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
+  });
+}
 
 function createWindow() {
-  win = new BrowserWindow({
+  if (isMacOS()) {
+    const dockMenu = Menu.buildFromTemplate(menuTemplate);
+    app.dock.setMenu(dockMenu);
+  } else {
+    const menu = new Menu();
+    menuTemplate.forEach(menuConfig => {
+      menu.append(new MenuItem(menuConfig));
+    });
+  }
+
+  mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
     webPreferences: {
@@ -15,23 +115,30 @@ function createWindow() {
     backgroundColor: '#fff'
   });
 
-  win.loadURL(targetPATH);
+  mainWindow.loadURL(targetPATH);
 
-  win.on('closed', () => {
-    win = null;
+  mainWindow.on('closed', () => {
+    mainWindow = null;
   });
 
-  win.once('ready-to-show', () => {
-    win.show();
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
   });
 }
 
-app.whenReady().then(createWindow);
+function initialize() {
+  makeSingleInstance();
+
+  app.whenReady().then(() => {
+    createWindow();
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
+  });
+}
 
 app.on('window-all-closed', () => {
   // 在 macOS 上，除非用户用 Cmd + Q 确定地退出，
   // 否则绝大部分应用及其菜单栏会保持激活。
-  if (process.platform !== 'darwin') {
+  if (!isMacOS()) {
     app.quit();
   }
 });
@@ -44,6 +151,8 @@ app.on('activate', () => {
   }
 });
 
+initialize();
+
 module.exports = {
-  win
-}
+  win: mainWindow
+};

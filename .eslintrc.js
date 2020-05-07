@@ -16,6 +16,8 @@ module.exports = {
     'no-extra-semi': 'error',
     'comma-dangle': 'off',
     'implicit-arrow-linebreak': 'off',
-    'arrow-parens': 'off'
+    'arrow-parens': 'off',
+    'no-new': 'off',
+    'object-curly-newline': 'off'
   }
 };
