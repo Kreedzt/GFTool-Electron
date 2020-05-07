@@ -1,0 +1,22 @@
+{
+  "name": "GFTool-Electron",
+  "version": "0.0.1",
+  "description": "GFTool Electron version",
+  "main": "src/index.js",
+  "repository": "https://github.com/Kreedzt/GFTool-Electron",
+  "author": "Kreedzt",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "electron": "^8.2.5"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
