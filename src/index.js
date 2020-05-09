@@ -1,11 +1,12 @@
 const { app, BrowserWindow, Menu, MenuItem } = require('electron');
 const path = require('path');
+const logger = require('electron-log');
 const { testReq } = require('./utils/http');
 const { isMacOS } = require('./utils/checkOS');
 
 let mainWindow = null;
 
-const targetPATH = `file://${path.join(
+const targetPATH = `${path.join(
   __dirname,
   '../public/pages/index.html'
 )}`;
@@ -13,12 +14,12 @@ const targetPATH = `file://${path.join(
 const menuTemplate = [
   {
     label: 'Test',
-    subMenu: [
+    submenu: [
       {
-        label: 'Reload',
+        label: 'Test GitHub Request',
         accelerator: 'CmdOrCtrl+L',
         click: () => {
-          console.log('Triggered click');
+          logger.info('Triggered click');
           testReq();
         }
       }
@@ -115,7 +116,7 @@ function createWindow() {
     backgroundColor: '#fff'
   });
 
-  mainWindow.loadURL(targetPATH);
+  mainWindow.loadFile(targetPATH);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
