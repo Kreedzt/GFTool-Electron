@@ -10,17 +10,26 @@
   "scripts": {
     "start": "electron .",
     "lint:fix": "eslint --fix src/**/*.js",
-    "build:win": "npm run lint:fix && electron-builder -w"
+    "build:win": "node src/build.js && npm run lint:fix && electron-builder -w"
   },
   "build": {
     "appId": "com.gftool.electron.app",
     "productName": "GFTool-Electron",
+    "files": [
+      "src/**/*"
+    ],
     "directories": {
-      "files": [
-        "web/**/*"
-      ],
       "output": "dist"
     },
+    "extraFiles": [
+      {
+        "from": "web",
+        "to": "web",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
     "nsis": {
       "oneClick": false,
       "perMachine": false,

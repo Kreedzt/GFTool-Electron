@@ -4,10 +4,13 @@ const log = require('electron-log');
 const { testReq } = require('./utils/http');
 const { isMacOS } = require('./utils/checkOS');
 const { updateRepo } = require('./update');
+const { generateCorrectPath } = require('./utils/env');
 
 let mainWindow = null;
 
-const targetPATH = `${path.join(__dirname, '../web/pages/index.html')}`;
+const targetPATH = generateCorrectPath(
+  `${path.join(__dirname, '../web/pages/index.html')}`
+);
 
 const logger = log.scope('index.js');
 

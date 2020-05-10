@@ -1,8 +1,9 @@
 const path = require('path');
 const log = require('electron-log');
 const { promisedExec } = require('./utils/shell');
+const { generateCorrectPath } = require('./utils/env');
 
-const repoPath = path.join(__dirname, '../web');
+const repoPath = generateCorrectPath(path.join(__dirname, '../web'));
 
 const logger = log.scope('update.js');
 
