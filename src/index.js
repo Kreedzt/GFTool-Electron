@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, dialog } = require('electron');
 const path = require('path');
 const log = require('electron-log');
 const { testReq } = require('./utils/http');
@@ -7,7 +7,7 @@ const { updateRepo } = require('./update');
 
 let mainWindow = null;
 
-const targetPATH = `${path.join(__dirname, '../public/pages/index.html')}`;
+const targetPATH = `${path.join(__dirname, '../web/pages/index.html')}`;
 
 const logger = log.scope('index.js');
 
@@ -80,9 +80,17 @@ const menuTemplate = [
     submenu: [
       {
         label: 'Manual update page',
-        click: () => {
+        click: async () => {
           logger.info('manual updating...');
-          updateRepo();
+          await updateRepo();
+          if (mainWindow) {
+            mainWindow.reload();
+            dialog.showMessageBox({
+              type: 'info',
+              title: 'update page',
+              detail: 'update page success'
+            });
+          }
         }
       }
     ]
