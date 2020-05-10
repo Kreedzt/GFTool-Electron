@@ -3,3 +3,4 @@ versions/
 node_modules/
 .idea/
 #web/
+*.log

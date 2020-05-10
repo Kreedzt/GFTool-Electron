@@ -1,22 +1,23 @@
 const { app, BrowserWindow, Menu, MenuItem } = require('electron');
 const path = require('path');
-const logger = require('electron-log');
+const log = require('electron-log');
 const { testReq } = require('./utils/http');
 const { isMacOS } = require('./utils/checkOS');
+const { updateRepo } = require('./update');
 
 let mainWindow = null;
 
-const targetPATH = `${path.join(
-  __dirname,
-  '../public/pages/index.html'
-)}`;
+const targetPATH = `${path.join(__dirname, '../public/pages/index.html')}`;
+
+const logger = log.scope('index.js');
 
 const menuTemplate = [
   {
     label: 'Test',
     submenu: [
       {
-        label: 'Test GitHub Request',
+        label: 'Test GitHub Request(Crashed, repairing...)',
+        enabled: false,
         accelerator: 'CmdOrCtrl+L',
         click: () => {
           logger.info('Triggered click');
@@ -70,6 +71,18 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.toggleDevTools();
           }
+        }
+      }
+    ]
+  },
+  {
+    label: 'About',
+    submenu: [
+      {
+        label: 'Manual update page',
+        click: () => {
+          logger.info('manual updating...');
+          // updateRepo();
         }
       }
     ]

@@ -1,35 +1,11 @@
-const axios = require('axios');
+const request = require('request');
+const logger = require('electron-log');
 const { win } = require('..');
-const { GitHubToken } = require('../config');
+const { AccessCode } = require('../config');
 
-const http = axios.create({
-  baseURL: '//api.github.com/graphql'
-});
-
-const reqInterceptor = req => {
-  req.auth = {
-    Kreedzt: GitHubToken
-  };
-
-  return req;
-};
-
-const resInterceptor = res => {
-  if (res.status !== 200) {
-    console.log('Request Error:', res.data);
-  }
-
-  return res.data;
-};
-
-http.interceptors.request.use(reqInterceptor);
-
-http.interceptors.response.use(resInterceptor);
+const BaseUrl = 'https://api.github.com/graphql';
 
 const RepoQuery = `{
-  viewer {
-    login
-  }
   repository(name: "GFTool", owner: "hycdes") {
     id
     commitComments(first: 10) {
@@ -40,18 +16,43 @@ const RepoQuery = `{
         }
       }
     }
-  }
 }`;
 
-const getRepoLastCommit = () => http.post('', RepoQuery);
+// TODO: 权限异常
+const getRepoLastCommit = callback =>
+  request.post(
+    `${BaseUrl}/graphql`,
+    {
+      headers: {
+        'User-Agent': 'request',
+        Authorization: AccessCode,
+        'content-type': 'application/json'
+      },
+      json: true,
+      // auth: {
+      //   user: 'Kreedzt',
+      //   pass: AccessCode
+      // },
+      body: JSON.stringify({
+        query: RepoQuery,
+        variables: {}
+      })
+    },
+    callback
+  );
 
 /**
  * Test GitHub Url request
  */
 function testReq() {
-  console.log('sending request...');
-  getRepoLastCommit().then(res => {
-    console.log('Repo last commit', res);
+  logger.info('sending request...');
+  getRepoLastCommit((error, response, body) => {
+    if (error) {
+      logger.error('err', error);
+    } else {
+      logger.info('response', response);
+      logger.info('body', body);
+    }
   });
 }
 
