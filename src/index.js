@@ -82,7 +82,7 @@ const menuTemplate = [
         label: 'Manual update page',
         click: () => {
           logger.info('manual updating...');
-          // updateRepo();
+          updateRepo();
         }
       }
     ]

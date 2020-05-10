@@ -6,12 +6,16 @@ const repoPath = path.join(__dirname, '../web');
 
 const logger = log.scope('update.js');
 
+const execOptions = {
+  cwd: repoPath
+};
+
 const updateRepo = async () => {
   try {
-    await promisedExec('which git');
-    await promisedExec(`cd ${repoPath}`);
-    await promisedExec('git checkout master');
-    await promisedExec('git pull');
+    await promisedExec('which git', execOptions);
+    await promisedExec(`cd ${repoPath}`, execOptions);
+    await promisedExec('git checkout master -f', execOptions);
+    await promisedExec('git pull', execOptions);
   } catch (e) {
     logger.error('updateRepo err', e);
   }

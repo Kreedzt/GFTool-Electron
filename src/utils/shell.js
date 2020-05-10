@@ -3,9 +3,9 @@ const log = require('electron-log');
 
 const logger = log.scope('shell.js');
 
-const promisedExec = str =>
+const promisedExec = (...params) =>
   new Promise((resolve, reject) => {
-    exec(str, (err, stdout, stderr) => {
+    exec(...params, (err, stdout, stderr) => {
       if (err) {
         logger.error('exec nodejs err', err);
         reject(err);
