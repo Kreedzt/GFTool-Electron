@@ -14,7 +14,7 @@ const updateRepo = async () => {
   try {
     await promisedExec('which git', execOptions);
     await promisedExec(`cd ${repoPath}`, execOptions);
-    await promisedExec('git checkout master -f', execOptions);
+    await promisedExec('git reset master --hard', execOptions);
     await promisedExec('git pull', execOptions);
   } catch (e) {
     logger.error('updateRepo err', e);
