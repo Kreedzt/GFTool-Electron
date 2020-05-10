@@ -8,14 +8,44 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "lint:fix": "eslint --fix src/**/*.js",
+    "build:win": "npm run lint:fix && electron-builder -w"
+  },
+  "build": {
+    "appId": "com.gftool.electron.app",
+    "productName": "GFTool-Electron",
+    "directories": {
+      "files": [
+        "web/**/*"
+      ],
+      "output": "dist"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "win": {
+      "icon": "assets/app-icon/win/app.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    }
   },
   "dependencies": {
-    "electron": "^8.2.5",
     "electron-log": "^4.1.2",
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "electron": "^8.2.5",
+    "electron-builder": "^22.6.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2"

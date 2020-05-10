@@ -1,6 +1,6 @@
 const path = require('path');
-const { promisedExec } = require('./utils/shell');
 const log = require('electron-log');
+const { promisedExec } = require('./utils/shell');
 
 const repoPath = path.join(__dirname, '../web');
 

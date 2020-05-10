@@ -1,6 +1,5 @@
 const request = require('request');
 const logger = require('electron-log');
-const { win } = require('..');
 const { AccessCode } = require('../config');
 
 const BaseUrl = 'https://api.github.com/graphql';
