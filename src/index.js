@@ -1,14 +1,25 @@
-const { app, BrowserWindow, Menu, MenuItem, dialog } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  MenuItem,
+  dialog,
+  shell,
+} = require('electron');
 const path = require('path');
+const { isDevelopment } = require('./utils/env');
 const log = require('electron-log');
 const { testReq } = require('./utils/http');
 const { isMacOS } = require('./utils/checkOS');
 const { updateRepo } = require('./update');
-const { generateCorrectPath } = require('./utils/env');
 
 let mainWindow = null;
 
-const targetPATH = generateCorrectPath('/web/pages/index.html');
+const targetPath = path.join(
+  __dirname,
+  isDevelopment ? '../' : '.',
+  'web/pages/index.html'
+);
 
 const logger = log.scope('index.js');
 
@@ -94,6 +105,14 @@ const menuTemplate = [
           }
         },
       },
+      {
+        label: 'Open Logs file',
+        click: () => {
+          const logFilePath = log.transports.file.getFile().path;
+          logger.info('log file path:', logFilePath);
+          shell.openExternal(`file://${logFilePath}`);
+        },
+      },
     ],
   },
 ];
@@ -138,7 +157,7 @@ function createWindow() {
     backgroundColor: '#fff',
   });
 
-  mainWindow.loadFile(targetPATH);
+  mainWindow.loadFile(targetPath);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
