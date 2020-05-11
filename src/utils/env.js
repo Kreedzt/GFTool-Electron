@@ -1,7 +1,7 @@
 const { app } = require('electron');
 const path = require('path');
 const log = require('electron-log');
-const { promisedExistFile } = require('./promisedFs');
+const { promisedReadFile } = require('./promisedFs');
 const { isMacOS } = require('./checkOS');
 
 let env = 'development';
@@ -10,10 +10,12 @@ const logger = log.scope('env.js');
 
 (async () => {
   try {
-    await promisedExistFile('app.asar');
-    env = 'production';
+    env = await promisedReadFile(path.join(app.getAppPath(), 'src/envFile'));
+    // env = 'development';
+    logger.info(`env set to development ${env}`);
   } catch (e) {
-    env = 'development';
+    logger.error('read env file error', e);
+    // env = 'production';
   }
 })();
 

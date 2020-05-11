@@ -3,5 +3,6 @@ versions/
 node_modules/
 .idea/
 dist/
+envFile
 #web/
 *.log

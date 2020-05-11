@@ -8,10 +8,10 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "electron .",
+    "start": "node envTool.js development && electron .",
     "lint:fix": "eslint --fix src/**/*.js",
-    "build:win": "$env:NODE_ENV=production && npm run lint:fix && electron-builder -w",
-    "build:mac": "export NODE_ENV=production && npm run lint:fix && electron-builder -m"
+    "build:win": "node envTool.js production && npm run lint:fix && electron-builder -w",
+    "build:mac": "node envTool.js production && npm run lint:fix && electron-builder -m"
   },
   "build": {
     "appId": "com.gftool.electron.app",
@@ -22,6 +22,7 @@
     "directories": {
       "output": "dist"
     },
+    "asar": false,
     "extraFiles": [
       {
         "from": "web",
@@ -31,7 +32,6 @@
         ]
       }
     ],
-    "asis": false,
     "nsis": {
       "oneClick": false,
       "perMachine": false,
