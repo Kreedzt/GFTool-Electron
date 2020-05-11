@@ -1,8 +1,9 @@
+const { app } = require('electron');
+const path = require('path');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Electron-builder will replace our file to *.asar, so must fix path issue here
-const generateCorrectPath = path =>
-  (isDevelopment ? path : path.replace('resources/app.asar/', ''));
+const generateCorrectPath = targetPath => path.join(app.getAppPath(), targetPath);
 
 module.exports = {
   isDevelopment,

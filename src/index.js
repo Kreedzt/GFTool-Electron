@@ -8,9 +8,7 @@ const { generateCorrectPath } = require('./utils/env');
 
 let mainWindow = null;
 
-const targetPATH = generateCorrectPath(
-  `${path.join(__dirname, '../web/pages/index.html')}`
-);
+const targetPATH = generateCorrectPath('/web/pages/index.html');
 
 const logger = log.scope('index.js');
 
@@ -25,9 +23,9 @@ const menuTemplate = [
         click: () => {
           logger.info('Triggered click');
           testReq();
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'View',
@@ -46,7 +44,7 @@ const menuTemplate = [
             }
             focusedWindow.reload();
           }
-        }
+        },
       },
       {
         label: 'Toggle Full Screen',
@@ -60,7 +58,7 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
           }
-        }
+        },
       },
       {
         label: 'Toggle Developer Tools',
@@ -74,9 +72,9 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.toggleDevTools();
           }
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'About',
@@ -91,13 +89,13 @@ const menuTemplate = [
             dialog.showMessageBox({
               type: 'info',
               title: 'update page',
-              detail: 'update page success'
+              detail: 'update page success',
             });
           }
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 ];
 
 // Make this app a single instance app.
@@ -135,9 +133,9 @@ function createWindow() {
     width: 1280,
     height: 720,
     webPreferences: {
-      nodeIntegration: false
+      nodeIntegration: false,
     },
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   });
 
   mainWindow.loadFile(targetPATH);
@@ -179,5 +177,5 @@ app.on('activate', () => {
 initialize();
 
 module.exports = {
-  win: mainWindow
+  win: mainWindow,
 };
