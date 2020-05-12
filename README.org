@@ -17,6 +17,24 @@ advice, please open an issue(paste your log file content).
   - [ ] Auto update page(web)
   - [ ] Auto update software
 
+** Build
+   You must have *nodejs* environment first, See [[https://nodejs.org/en/][Nodejs]] to how to install.
+
+   - Start dev:
+     #+begin_src shell
+       npm run start
+     #+end_src
+
+   - Build for Windows:
+     #+begin_src shell
+       npm run build:win
+     #+end_src
+
+   - Build for MacOS:
+     #+begin_src shell
+       npm run build:mac
+     #+end_src
+
 ** Install and Usage
 
    Install: 
