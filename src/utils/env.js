@@ -5,19 +5,22 @@ const { promisedReadFile } = require('./promisedFs');
 const { isMacOS } = require('./checkOS');
 
 let env = 'development';
+let isEnvLocked = false;
 
 const logger = log.scope('env.js');
 
-(async () => {
+const setEnv = async () => {
+  if (isEnvLocked) return;
   try {
     env = await promisedReadFile(path.join(app.getAppPath(), 'src/envFile'));
     // env = 'development';
-    logger.info(`env set to development ${env}`);
+    logger.info(`env set to ${env}`);
   } catch (e) {
     logger.error('read env file error', e);
     // env = 'production';
   }
-})();
+  isEnvLocked = true;
+};
 
 const isDevelopment = env === 'development';
 
@@ -39,6 +42,7 @@ const getCorrectPath = (targetPath) => {
 
 
 module.exports = {
+  setEnv,
   isDevelopment,
   getCorrectPath
 };

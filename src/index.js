@@ -7,7 +7,7 @@ const {
   shell,
 } = require('electron');
 const path = require('path');
-const { isDevelopment } = require('./utils/env');
+const { getCorrectPath, setEnv } = require('./utils/env');
 const log = require('electron-log');
 const { testReq } = require('./utils/http');
 const { isMacOS } = require('./utils/checkOS');
@@ -15,11 +15,9 @@ const { updateRepo } = require('./update');
 
 let mainWindow = null;
 
-const targetPath = path.join(
-  __dirname,
-  isDevelopment ? '../' : '.',
-  'web/pages/index.html'
-);
+setEnv();
+
+const targetPath = getCorrectPath('web/pages/index.html');
 
 const logger = log.scope('index.js');
 
@@ -137,7 +135,7 @@ function makeSingleInstance() {
   });
 }
 
-function createWindow() {
+async function createWindow() {
   if (isMacOS()) {
     const dockMenu = Menu.buildFromTemplate(menuTemplate);
     app.dock.setMenu(dockMenu);

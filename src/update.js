@@ -1,17 +1,21 @@
 const path = require('path');
 const log = require('electron-log');
 const { promisedExec } = require('./utils/shell');
-const { getCorrectPath } = require('./utils/env');
+const { getCorrectPath, setEnv } = require('./utils/env');
+
+setEnv();
 
 const repoPath = getCorrectPath('web');
 
 const logger = log.scope('update.js');
 
 const execOptions = {
-  cwd: repoPath
+  cwd: repoPath,
 };
 
 const updateRepo = async () => {
+  logger.info('repoPath', repoPath);
+  return;
   try {
     await promisedExec('which git', execOptions);
     await promisedExec(`cd ${repoPath}`, execOptions);
@@ -23,5 +27,5 @@ const updateRepo = async () => {
 };
 
 module.exports = {
-  updateRepo
+  updateRepo,
 };
