@@ -22,7 +22,6 @@
     "directories": {
       "output": "dist"
     },
-    "asar": false,
     "extraFiles": [
       {
         "from": "web",
