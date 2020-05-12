@@ -15,10 +15,6 @@ const { updateRepo } = require('./update');
 
 let mainWindow = null;
 
-setEnv();
-
-const targetPath = getCorrectPath('web/pages/index.html');
-
 const logger = log.scope('index.js');
 
 const menuTemplate = [
@@ -135,7 +131,8 @@ function makeSingleInstance() {
   });
 }
 
-async function createWindow() {
+function createWindow() {
+  const targetPath = getCorrectPath('web/pages/index.html');
   if (isMacOS()) {
     const dockMenu = Menu.buildFromTemplate(menuTemplate);
     app.dock.setMenu(dockMenu);
@@ -166,7 +163,8 @@ async function createWindow() {
   });
 }
 
-function initialize() {
+async function initialize() {
+  await setEnv();
   makeSingleInstance();
 
   app.whenReady().then(() => {
