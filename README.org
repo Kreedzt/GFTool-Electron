@@ -2,7 +2,7 @@
 
 This project is [[https://github.com/hycdes/GFTool][GFTool]] electron version.
 
-It experice better for offline-use
+It experice better for offline use
 
 Tips:
 This project is currently *NOT STABLE*, if you found some bug or have some
@@ -12,7 +12,8 @@ advice, please open an issue(paste your log file content).
 
   - [X] manual update
   - [X] manual open log menu
-  - [ ] Auto open log when crashed
+  - [X] Clipboard crashed
+  - [ ] Auto open log when application crashed
   - [ ] Auto update page(web)
   - [ ] Auto update software
 
@@ -28,9 +29,20 @@ advice, please open an issue(paste your log file content).
       For MacOS, download *dmg* file(Tested on MacOS 10.13.6)
 
       
+   *NOTICE*: Because of electron limit, you *MUST* use *short cut* instead of
+   web pages "Copy" or "Paste" button. 
+   
+   See Edit menu
+
    Usage:
    Menus(For MacOS, Check your Title bar):
    - Test(Or GFTool-Electron(The app name))
+     + Test Github Request...: TODO
+   - Edit(Override web contents clipboard, which is very *IMPORANT*)
+     + SelectAll: shorcut: *Ctrl+A* or *Cmd+A*
+     + Cut: shorcut: *Ctrl+X* or *Cmd+X*
+     + Copy: shorcut: *Ctrl+C* or *Cmd+C*
+     + Paste: shorcut: *Ctrl+V* or *Cmd+V*
    - View
      + Reload: Reload The Web page
      + Toggle Full Screen

@@ -33,6 +33,51 @@ const menuTemplate = [
     ],
   },
   {
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'SelectAll',
+        accelerator: 'CmdOrCtrl+A',
+        click: (item, focusedWindow, focusedWebContents) => {
+          if (focusedWindow) {
+            focusedWindow.webContents.selectAll();
+            logger.info('SelectAll: window contents', focusedWindow.webContents);
+          }
+        }
+      },
+      {
+        label: 'Cut',
+        accelerator: 'CmdOrCtrl+X',
+        click: (item, focusedWindow, focusedWebContents) => {
+          if (focusedWindow) {
+            focusedWindow.webContents.cut();
+            logger.info('Cut: window contents', focusedWindow.webContents);
+          }
+        }
+      },
+      {
+        label: 'Copy',
+        accelerator: 'CmdOrCtrl+C',
+        click: (item, focusedWindow, focusedWebContents) => {
+          if (focusedWindow) {
+            focusedWindow.webContents.copy();
+            logger.info('Copy: window contents', focusedWindow.webContents);
+          }
+        }
+      },
+      {
+        label: 'Paste',
+        accelerator: 'CmdOrCtrl+V',
+        click: (item, focusedWindow, focusedWebContents) => {
+          if (focusedWindow) {
+            focusedWindow.webContents.paste();
+            logger.info('Paste: window contents', focusedWindow.webContents);
+          }
+        }
+      },
+    ]
+  },
+  {
     label: 'View',
     submenu: [
       {
