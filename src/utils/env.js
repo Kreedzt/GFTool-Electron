@@ -40,7 +40,7 @@ const getCorrectPath = targetPath => {
     logger.info('system: macos');
     returnPath = path.join(app.getAppPath(), '../../', targetPath);
   } else {
-    returnPath = path.join(app.getAppPath(), '../', targetPath);
+    returnPath = path.join(app.getAppPath(), '../../', targetPath);
   }
   logger.info('returnPath:', returnPath);
   return returnPath;

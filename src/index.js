@@ -1,14 +1,14 @@
+require('v8-compile-cache');
 const {
   app,
   BrowserWindow,
   Menu,
   MenuItem,
   dialog,
-  shell,
+  shell
 } = require('electron');
-const path = require('path');
-const { getCorrectPath, setEnv } = require('./utils/env');
 const log = require('electron-log');
+const { getCorrectPath, setEnv } = require('./utils/env');
 const { testReq } = require('./utils/http');
 const { isMacOS } = require('./utils/checkOS');
 const { updateRepo } = require('./update');
@@ -28,9 +28,9 @@ const menuTemplate = [
         click: () => {
           logger.info('Triggered click');
           testReq();
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     label: 'Edit',
@@ -38,17 +38,20 @@ const menuTemplate = [
       {
         label: 'SelectAll',
         accelerator: 'CmdOrCtrl+A',
-        click: (item, focusedWindow, focusedWebContents) => {
+        click: (item, focusedWindow) => {
           if (focusedWindow) {
             focusedWindow.webContents.selectAll();
-            logger.info('SelectAll: window contents', focusedWindow.webContents);
+            logger.info(
+              'SelectAll: window contents',
+              focusedWindow.webContents
+            );
           }
         }
       },
       {
         label: 'Cut',
         accelerator: 'CmdOrCtrl+X',
-        click: (item, focusedWindow, focusedWebContents) => {
+        click: (item, focusedWindow) => {
           if (focusedWindow) {
             focusedWindow.webContents.cut();
             logger.info('Cut: window contents', focusedWindow.webContents);
@@ -58,7 +61,7 @@ const menuTemplate = [
       {
         label: 'Copy',
         accelerator: 'CmdOrCtrl+C',
-        click: (item, focusedWindow, focusedWebContents) => {
+        click: (item, focusedWindow) => {
           if (focusedWindow) {
             focusedWindow.webContents.copy();
             logger.info('Copy: window contents', focusedWindow.webContents);
@@ -68,13 +71,13 @@ const menuTemplate = [
       {
         label: 'Paste',
         accelerator: 'CmdOrCtrl+V',
-        click: (item, focusedWindow, focusedWebContents) => {
+        click: (item, focusedWindow) => {
           if (focusedWindow) {
             focusedWindow.webContents.paste();
             logger.info('Paste: window contents', focusedWindow.webContents);
           }
         }
-      },
+      }
     ]
   },
   {
@@ -94,7 +97,7 @@ const menuTemplate = [
             }
             focusedWindow.reload();
           }
-        },
+        }
       },
       {
         label: 'Toggle Full Screen',
@@ -108,7 +111,7 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
           }
-        },
+        }
       },
       {
         label: 'Toggle Developer Tools',
@@ -122,9 +125,9 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.toggleDevTools();
           }
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     label: 'About',
@@ -139,10 +142,10 @@ const menuTemplate = [
             dialog.showMessageBox({
               type: 'info',
               title: 'update page',
-              detail: 'update page success',
+              detail: 'update page success'
             });
           }
-        },
+        }
       },
       {
         label: 'Open Logs file',
@@ -150,10 +153,10 @@ const menuTemplate = [
           const logFilePath = log.transports.file.getFile().path;
           logger.info('log file path:', logFilePath);
           shell.openExternal(`file://${logFilePath}`);
-        },
-      },
-    ],
-  },
+        }
+      }
+    ]
+  }
 ];
 
 // Make this app a single instance app.
@@ -192,9 +195,9 @@ function createWindow() {
     width: 1280,
     height: 720,
     webPreferences: {
-      nodeIntegration: false,
+      nodeIntegration: false
     },
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   });
 
   mainWindow.loadFile(targetPath);
@@ -237,5 +240,5 @@ app.on('activate', () => {
 initialize();
 
 module.exports = {
-  win: mainWindow,
+  win: mainWindow
 };

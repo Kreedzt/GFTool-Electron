@@ -56,7 +56,8 @@
   },
   "dependencies": {
     "electron-log": "^4.1.2",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "v8-compile-cache": "^2.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
