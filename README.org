@@ -2,7 +2,7 @@
 
 This project is [[https://github.com/hycdes/GFTool][GFTool]] electron version.
 
-It experice better for offline use
+It experience better for offline use
 
 Tips:
 This project is currently *NOT STABLE*, if you found some bug or have some
