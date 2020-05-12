@@ -1,0 +1,44 @@
+* GFTool-Electron
+
+This project is [[https://github.com/hycdes/GFTool][GFTool]] electron version.
+
+It experice better for offline-use
+
+Tips:
+This project is currently *NOT STABLE*, if you found some bug or have some
+advice, please open an issue(paste your log file content).
+
+** RoadMap
+
+  - [X] manual update
+  - [X] manual open log menu
+  - [ ] Auto open log when crashed
+  - [ ] Auto update page(web)
+  - [ ] Auto update software
+
+** Install and Usage
+
+   Install: 
+   1. Requirements:
+      This software use *git* for *manual update*, if your pc not have it, the manual update menu will *NOT EFFECT*
+      So if you want to use *manual update* menu, your pc must have installed [[https://git-scm.com/][git]].
+
+   2. Go to [[https://github.com/Kreedzt/GFTool-Electron/releases][release]] page to download lastest build.
+      # For windows, download *exe* file,
+      For MacOS, download *dmg* file(Tested on MacOS 10.13.6)
+
+      
+   Usage:
+   Menus(For MacOS, Check your Title bar):
+   - Test(Or GFTool-Electron(The app name))
+   - View
+     + Reload: Reload The Web page
+     + Toggle Full Screen
+     + Toggle Developer Tools: open chrome devtools(For debug if you are sure
+       what you are doing)
+   - About
+     + Manual Update Page: Manual pull code from [[https://github.com/hycdes/GFTool][GFTool]] (using git)
+     + Open Logs file: open the application logs(for issue usage)
+
+** License
+   [[https://github.com/Kreedzt/GFTool-Electron/blob/master/LICENSE][MIT]]
