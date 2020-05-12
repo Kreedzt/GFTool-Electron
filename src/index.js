@@ -154,6 +154,24 @@ const menuTemplate = [
           logger.info('log file path:', logFilePath);
           shell.openExternal(`file://${logFilePath}`);
         }
+      },
+      {
+        label: 'Download latest software',
+        click: () => {
+          shell.openExternal(
+            'https://github.com/Kreedzt/GFTool-Electron/releases'
+          );
+        }
+      },
+      {
+        label: 'Go to web page',
+        click: () => {
+          shell.openExternal('https://hycdes.com/');
+        }
+      },
+      {
+        label: `Current Version: ${app.getVersion()}`,
+        enabled: false
       }
     ]
   }
