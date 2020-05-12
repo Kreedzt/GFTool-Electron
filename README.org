@@ -43,8 +43,8 @@ advice, please open an issue(paste your log file content).
       So if you want to use *manual update* menu, your pc must have installed [[https://git-scm.com/][git]].
 
    2. Go to [[https://github.com/Kreedzt/GFTool-Electron/releases][release]] page to download lastest build.
-      # For windows, download *exe* file,
-      For MacOS, download *dmg* file(Tested on MacOS 10.13.6)
+      For windows, download ~exe~ file(Tested on Windows 10 1909)
+      For MacOS, download ~dmg~ file(Tested on MacOS 10.13.6)
 
       
    *NOTICE*: Because of electron limit, you *MUST* use *short cut* instead of
@@ -57,10 +57,10 @@ advice, please open an issue(paste your log file content).
    - Test(Or GFTool-Electron(The app name))
      + Test Github Request...: TODO
    - Edit(Override web contents clipboard, which is very *IMPORANT*)
-     + SelectAll: shorcut: *Ctrl+A* or *Cmd+A*
-     + Cut: shorcut: *Ctrl+X* or *Cmd+X*
-     + Copy: shorcut: *Ctrl+C* or *Cmd+C*
-     + Paste: shorcut: *Ctrl+V* or *Cmd+V*
+     + SelectAll: shorcut: ~Ctrl+A~ or ~Cmd+A~
+     + Cut: shorcut: ~Ctrl+X~ or ~Cmd+X~
+     + Copy: shorcut: ~Ctrl+C~ or ~Cmd+C~
+     + Paste: shorcut: ~Ctrl+V~ or ~Cmd+V~
    - View
      + Reload: Reload The Web page
      + Toggle Full Screen
