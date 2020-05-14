@@ -1,61 +1,72 @@
-const request = require('request');
-const logger = require('electron-log');
+const superagent = require('superagent');
+const log = require('electron-log');
 const { AccessCode } = require('../config');
 
-const BaseUrl = 'https://api.github.com/graphql';
+const logger = log.scope('http.js');
+
+const BaseUrl = 'https://api.github.com';
 
 const RepoQuery = `{
   repository(name: "GFTool", owner: "hycdes") {
     id
-    commitComments(first: 10) {
-      nodes {
-        commit {
+    ref(qualifiedName: "master") {
+      name
+      target {
+        ... on Commit {
           id
-          committedDate
+          history(first: 1) {
+            nodes {
+              committedDate
+              id
+              oid
+              message
+            }
+          }
         }
       }
     }
+  }
 }`;
 
 // TODO: 权限异常
-const getRepoLastCommit = callback =>
-  request.post(
-    `${BaseUrl}/graphql`,
-    {
-      headers: {
-        'User-Agent': 'request',
-        Authorization: AccessCode,
-        'content-type': 'application/json'
-      },
-      json: true,
-      // auth: {
-      //   user: 'Kreedzt',
-      //   pass: AccessCode
-      // },
-      body: JSON.stringify({
-        query: RepoQuery,
-        variables: {}
-      })
-    },
-    callback
-  );
+const getRepoLastCommit = () => {
+  return superagent
+    .post(`${BaseUrl}/graphql`)
+    .set('Authorization', AccessCode)
+    .set('User-Agent', 'request')
+    .timeout({
+      response: 3000, // 发送请求后 5 秒视为超时
+      deadline: 30000 // 允许响应延迟
+    })
+    .send({
+      query: RepoQuery,
+      variables: {}
+    });
+};
 
 /**
- * Test GitHub Url request
+ * Get latest web page commit info
  */
-function testReq() {
+function getWebPageCommit() {
   logger.info('sending request...');
-  getRepoLastCommit((error, response, body) => {
-    if (error) {
-      logger.error('err', error);
-    } else {
-      logger.info('response', response);
-      logger.info('body', body);
-    }
-  });
+  getRepoLastCommit()
+    .then(res => {
+      if (res.timeout) {
+        logger.error('getRepoLastCommit timeout');
+        return;
+      }
+      logger.info('getRepoLastCommit res:', res.body, res.status);
+      
+      const latestCommitInfo = res.body.data.repository.ref.target.history.nodes[0];
+      
+      logger.info('lastest commit:', latestCommitInfo);
+    })
+    .catch(err => {
+      logger.error('getRepoLastCommit err:', err.message, err.response);
+    });
 }
 
 module.exports = {
   getRepoLastCommit,
-  testReq
+  getWebPageCommit
 };

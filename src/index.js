@@ -10,7 +10,7 @@ const {
 } = require('electron');
 const log = require('electron-log');
 const { getCorrectPath, setEnv } = require('./utils/env');
-const { testReq } = require('./utils/http');
+const { getWebPageCommit } = require('./utils/http');
 const { isMacOS } = require('./utils/checkOS');
 const { updateRepo } = require('./update');
 
@@ -23,12 +23,12 @@ const menuTemplate = [
     label: 'Test',
     submenu: [
       {
-        label: 'Test GitHub Request(Crashed, repairing...)',
+        label: 'Get web page version',
         // enabled: false,
         accelerator: 'CmdOrCtrl+L',
         click: () => {
           logger.info('Triggered click');
-          testReq();
+          getWebPageCommit();
         }
       }
     ]

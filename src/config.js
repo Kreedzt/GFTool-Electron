@@ -1,5 +1,5 @@
-const GitHubToken = '4ad9d7e6e67ed130a52ff52f86a94adc7ba21c6d';
-const AccessCode = 'Basic S3JlZWR6dDo0YWQ5ZDdlNmU2N2VkMTMwYTUyZmY1MmY4NmE5NGFkYzdiYTIxYzZk';
+const GitHubToken = 'f96e3b63637ef2b9e2a4e0e0540f77b6bef063cb';
+const AccessCode = 'Basic S3JlZWR6dDpmOTZlM2I2MzYzN2VmMmI5ZTJhNGUwZTA1NDBmNzdiNmJlZjA2M2Ni';
 
 module.exports = {
   GitHubToken,
