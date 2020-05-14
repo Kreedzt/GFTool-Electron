@@ -5,7 +5,8 @@ const {
   Menu,
   MenuItem,
   dialog,
-  shell
+  shell,
+  clipboard
 } = require('electron');
 const log = require('electron-log');
 const { getCorrectPath, setEnv } = require('./utils/env');
@@ -23,7 +24,7 @@ const menuTemplate = [
     submenu: [
       {
         label: 'Test GitHub Request(Crashed, repairing...)',
-        enabled: false,
+        // enabled: false,
         accelerator: 'CmdOrCtrl+L',
         click: () => {
           logger.info('Triggered click');
@@ -124,6 +125,36 @@ const menuTemplate = [
         click: (item, focusedWindow) => {
           if (focusedWindow) {
             focusedWindow.toggleDevTools();
+          }
+        }
+      }
+    ]
+  },
+  {
+    label: 'Actions',
+    submenu: [
+      {
+        label: 'Copy url path',
+        click: (item, focusedWindow) => {
+          logger.info('Copy url path');
+          if (focusedWindow) {
+            const url = focusedWindow.webContents.getURL();
+            clipboard.writeText(url);
+            dialog.showMessageBox({
+              type: 'info',
+              title: 'Copy url path',
+              detail: 'Copy url success! Now you can paste anywhere you want'
+            });
+          }
+        }
+      },
+      {
+        label: 'Open current link external',
+        click: (item, focusedWindow) => {
+          logger.info('Open current link');
+          if (focusedWindow) {
+            const url = focusedWindow.webContents.getURL();
+            shell.openExternal(url);
           }
         }
       }

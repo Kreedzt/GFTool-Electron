@@ -37,7 +37,7 @@ advice, please open an issue(paste your log file content).
 
 ** Install and Usage
 
-   Install: 
+   Install:
    1. Requirements:
       This software use *git* for *manual update*, if your pc not have it, the manual update menu will *NOT EFFECT*
       So if you want to use *manual update* menu, your pc must have installed [[https://git-scm.com/][git]].
@@ -46,10 +46,10 @@ advice, please open an issue(paste your log file content).
       For windows, download ~exe~ file(Tested on Windows 10 1909)
       For MacOS, download ~dmg~ file(Tested on MacOS 10.13.6)
 
-      
+
    *NOTICE*: Because of electron limit, you *MUST* use *short cut* instead of
-   web pages "Copy" or "Paste" button. 
-   
+   web pages "Copy" or "Paste" button.
+
    See Edit menu
 
    Usage:
@@ -61,6 +61,9 @@ advice, please open an issue(paste your log file content).
      + Cut: shorcut: ~Ctrl+X~ or ~Cmd+X~
      + Copy: shorcut: ~Ctrl+C~ or ~Cmd+C~
      + Paste: shorcut: ~Ctrl+V~ or ~Cmd+V~
+   - Actions
+     + Copy url Path: copy the link address to your clipboard
+     + Open current link: open link external(By your browser)
    - View
      + Reload: Reload The Web page
      + Toggle Full Screen
