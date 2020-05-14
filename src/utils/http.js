@@ -47,23 +47,26 @@ const getRepoLastCommit = () => {
 /**
  * Get latest web page commit info
  */
-function getWebPageCommit() {
+async function getWebPageCommit() {
   logger.info('sending request...');
-  getRepoLastCommit()
-    .then(res => {
-      if (res.timeout) {
-        logger.error('getRepoLastCommit timeout');
-        return;
-      }
-      logger.info('getRepoLastCommit res:', res.body, res.status);
-      
-      const latestCommitInfo = res.body.data.repository.ref.target.history.nodes[0];
-      
+
+  let latestCommitInfo;
+
+  try {
+    const res = await getRepoLastCommit();
+    logger.info('getRepoLastCommit res:', res.body, res.status);
+    
+    if (res.timeout) {
+      logger.error('getRepoLastCommit timeout');
+    } else {
+      latestCommitInfo = res.body.data.repository.ref.target.history.nodes[0];
       logger.info('lastest commit:', latestCommitInfo);
-    })
-    .catch(err => {
-      logger.error('getRepoLastCommit err:', err.message, err.response);
-    });
+    }
+  } catch (err) {
+    logger.error('getRepoLastCommit err:', err.message, err.response);    
+  }
+  
+  return latestCommitInfo;
 }
 
 module.exports = {

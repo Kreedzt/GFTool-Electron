@@ -23,12 +23,26 @@ const menuTemplate = [
     label: 'Test',
     submenu: [
       {
-        label: 'Get web page version',
+        label: 'Get lastest web page version',
         // enabled: false,
         accelerator: 'CmdOrCtrl+L',
-        click: () => {
-          logger.info('Triggered click');
-          getWebPageCommit();
+        click: async () => {
+          logger.info('Get web page version fn');
+          const res = await getWebPageCommit();
+
+          if (!res) {
+            dialog.showMessageBox({
+              type: 'error',
+              title: 'Lastest web page',
+              detail: 'Get latest web page info error'
+            });
+            return;
+          }
+          dialog.showMessageBox({
+            type: 'info',
+            title: 'Latest commit info',
+            detail: `comittedDate:${res.committedDate}\ncommitId:${res.oid}\ncommitMessage:${res.message}`
+          });
         }
       }
     ]
