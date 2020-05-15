@@ -105,7 +105,7 @@ async function getApplicationRelease() {
 
   try {
     const res = await getLatestRelease();
-    logger.info('getApplication latest release res:', res.body.res.status);
+    logger.info('getApplication latest release res:', res.body, res.status);
 
     if (res.timeout) {
       logger.error('getApplicationRelease timeout');
