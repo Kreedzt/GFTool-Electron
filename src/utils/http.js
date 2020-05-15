@@ -28,7 +28,20 @@ const RepoQuery = `{
   }
 }`;
 
-// TODO: 权限异常
+const ApplicationQuery = `{
+  repository(name: "GFTool-Electron", owner: "Kreedzt") {
+    id
+    releases(last: 1) {
+      nodes {
+        id
+        description
+        createdAt
+        tagName
+      }
+    }
+  }
+}`;
+
 const getRepoLastCommit = () => superagent
   .post(`${BaseUrl}/graphql`)
   .set('Authorization', AccessCode)
@@ -42,11 +55,24 @@ const getRepoLastCommit = () => superagent
     variables: {}
   });
 
+const getLatestRelease = () => superagent
+      .post(`${BaseUrl}/graphql`)
+      .set('Authorization', AccessCode)
+      .set('User-Agent', 'request')
+      .timeout({
+        response: 3000, // 发送请求后 5 秒视为超时
+        deadline: 30000 // 允许响应延迟
+      })
+      .send({
+        query: ApplicationQuery,
+        variables: {}
+      });
+
 /**
  * Get latest web page commit info
  */
 async function getWebPageCommit() {
-  logger.info('sending request...');
+  logger.info('getWebPageCommit fn');
 
   let latestCommitInfo;
 
@@ -67,7 +93,32 @@ async function getWebPageCommit() {
   return latestCommitInfo;
 }
 
+/**
+ *
+ */
+async function getApplicationRelease() {
+  logger.info('getApplicationRelease fn');
+
+  let latestReleaseInfo;
+
+  try {
+    const res = await getLatestRelease();
+    logger.info('getApplication latest release res:', res.body.res.status);
+
+    if (res.timeout) {
+      logger.error('getApplicationRelease timeout');
+    } else {
+      [latestReleaseInfo] = res.body.data.repository.releases.nodes;
+    }
+  } catch (err) {
+    logger.error('getApplicationRelease err:', err.message, err.response);
+  }
+
+  return latestReleaseInfo;
+};
+
 module.exports = {
   getRepoLastCommit,
-  getWebPageCommit
+  getWebPageCommit,
+  getApplicationRelease
 };

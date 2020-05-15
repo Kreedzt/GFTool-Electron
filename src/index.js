@@ -6,11 +6,11 @@ const {
   MenuItem,
   dialog,
   shell,
-  clipboard
+  clipboard,
 } = require('electron');
 const log = require('electron-log');
 const { getCorrectPath, setEnv } = require('./utils/env');
-const { getWebPageCommit } = require('./utils/http');
+const { getWebPageCommit, getApplicationRelease } = require('./utils/http');
 const { isMacOS } = require('./utils/checkOS');
 const { updateRepo } = require('./update');
 
@@ -34,18 +34,41 @@ const menuTemplate = [
             dialog.showMessageBox({
               type: 'error',
               title: 'Lastest web page',
-              detail: 'Get latest web page info error'
+              detail: 'Get latest web page info error',
             });
             return;
           }
           dialog.showMessageBox({
             type: 'info',
             title: 'Latest commit info',
-            detail: `comittedDate:${res.committedDate}\ncommitId:${res.oid}\ncommitMessage:${res.message}`
+            detail: `comittedDate:${res.committedDate}\ncommitId:${res.oid}\ncommitMessage:${res.message}`,
           });
-        }
-      }
-    ]
+        },
+      },
+      {
+        label: 'Get latest application release',
+        click: async () => {
+          logger.info('Get latest application release fn');
+
+          const res = await getApplicationRelease();
+
+          if (!res) {
+            dialog.showMessageBox({
+              type: 'error',
+              title: 'Lastest release',
+              detail: 'Get latest release info error',
+            });
+            return;
+          }
+
+          dialog.showMessageBox({
+            type: 'info',
+            title: 'Latest release info',
+            detail: `version:${res.tagName}\ncreatedAt:${res.createdAt}\ndescription:${res.description}`,
+          });
+        },
+      },
+    ],
   },
   {
     label: 'Edit',
@@ -61,7 +84,7 @@ const menuTemplate = [
               focusedWindow.webContents
             );
           }
-        }
+        },
       },
       {
         label: 'Cut',
@@ -71,7 +94,7 @@ const menuTemplate = [
             focusedWindow.webContents.cut();
             logger.info('Cut: window contents', focusedWindow.webContents);
           }
-        }
+        },
       },
       {
         label: 'Copy',
@@ -81,7 +104,7 @@ const menuTemplate = [
             focusedWindow.webContents.copy();
             logger.info('Copy: window contents', focusedWindow.webContents);
           }
-        }
+        },
       },
       {
         label: 'Paste',
@@ -91,9 +114,9 @@ const menuTemplate = [
             focusedWindow.webContents.paste();
             logger.info('Paste: window contents', focusedWindow.webContents);
           }
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'View',
@@ -112,7 +135,7 @@ const menuTemplate = [
             }
             focusedWindow.reload();
           }
-        }
+        },
       },
       {
         label: 'Toggle Full Screen',
@@ -125,6 +148,14 @@ const menuTemplate = [
         click: (item, focusedWindow) => {
           if (focusedWindow) {
             focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
+          }
+        },
+      },
+      {
+        label: 'Toggle always on top',
+        click: (item, focusedWindow) => {
+          if (focusedWindow) {
+            focusedWindow.setAlwaysOnTop(!focusedWindow.isAlwaysOnTop());
           }
         }
       },
@@ -140,9 +171,9 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.toggleDevTools();
           }
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'Actions',
@@ -157,10 +188,10 @@ const menuTemplate = [
             dialog.showMessageBox({
               type: 'info',
               title: 'Copy url path',
-              detail: 'Copy url success! Now you can paste anywhere you want'
+              detail: 'Copy url success! Now you can paste anywhere you want',
             });
           }
-        }
+        },
       },
       {
         label: 'Open current link external',
@@ -170,9 +201,9 @@ const menuTemplate = [
             const url = focusedWindow.webContents.getURL();
             shell.openExternal(url);
           }
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'About',
@@ -189,17 +220,17 @@ const menuTemplate = [
               dialog.showMessageBox({
                 type: 'info',
                 title: 'update page',
-                detail: 'update page success'
-              }); 
+                detail: 'update page success',
+              });
             } else {
               dialog.showMessageBox({
                 type: 'error',
                 title: 'update page',
-                detail: 'update page error'
+                detail: 'update page error',
               });
             }
           }
-        }
+        },
       },
       {
         label: 'Open Logs file',
@@ -207,7 +238,7 @@ const menuTemplate = [
           const logFilePath = log.transports.file.getFile().path;
           logger.info('log file path:', logFilePath);
           shell.openExternal(`file://${logFilePath}`);
-        }
+        },
       },
       {
         label: 'Download latest software',
@@ -215,20 +246,20 @@ const menuTemplate = [
           shell.openExternal(
             'https://github.com/Kreedzt/GFTool-Electron/releases'
           );
-        }
+        },
       },
       {
         label: 'Go to web page',
         click: () => {
           shell.openExternal('https://hycdes.com/');
-        }
+        },
       },
       {
         label: `Current Version: ${app.getVersion()}`,
-        enabled: false
-      }
-    ]
-  }
+        enabled: false,
+      },
+    ],
+  },
 ];
 
 // Make this app a single instance app.
@@ -267,9 +298,9 @@ function createWindow() {
     width: 1280,
     height: 720,
     webPreferences: {
-      nodeIntegration: false
+      nodeIntegration: false,
     },
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   });
 
   mainWindow.loadFile(targetPath);
@@ -312,5 +343,5 @@ app.on('activate', () => {
 initialize();
 
 module.exports = {
-  win: mainWindow
+  win: mainWindow,
 };
