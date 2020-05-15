@@ -1,6 +1,6 @@
 {
   "name": "GFTool-Electron",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "GFTool Electron version",
   "main": "src/index.js",
   "repository": "https://github.com/Kreedzt/GFTool-Electron",
