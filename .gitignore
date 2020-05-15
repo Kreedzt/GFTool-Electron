@@ -4,5 +4,5 @@ node_modules/
 .idea/
 dist/
 envFile
-#web/
+web/
 *.log
