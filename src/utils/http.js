@@ -1,5 +1,7 @@
 const superagent = require('superagent');
+require('superagent-proxy')(superagent);
 const log = require('electron-log');
+const { getProxy } = require('./proxy');
 const { AccessCode } = require('../config');
 
 const logger = log.scope('http.js');
@@ -42,33 +44,52 @@ const ApplicationQuery = `{
   }
 }`;
 
-const getRepoLastCommit = () =>
-  superagent
+const getRepoLastCommit = async () => {
+  const baseReq = superagent
     .post(`${BaseUrl}/graphql`)
     .set('Authorization', AccessCode)
     .set('User-Agent', 'request')
     .timeout({
       response: 3000, // 发送请求后 5 秒视为超时
       deadline: 30000, // 允许响应延迟
-    })
-    .send({
-      query: RepoQuery,
-      variables: {},
     });
 
-const getLatestRelease = () =>
-  superagent
+  const params = {
+    query: RepoQuery,
+    variables: {},
+  };
+
+  const proxy = await getProxy();
+
+  if (proxy) {
+    return baseReq.send(params);
+  }
+  return baseReq.proxy(proxy).send(params);
+};
+
+const getLatestRelease = async () => {
+  const baseReq = superagent
     .post(`${BaseUrl}/graphql`)
     .set('Authorization', AccessCode)
     .set('User-Agent', 'request')
     .timeout({
       response: 3000, // 发送请求后 5 秒视为超时
       deadline: 30000, // 允许响应延迟
-    })
-    .send({
-      query: ApplicationQuery,
-      variables: {},
     });
+
+  const params = {
+    query: ApplicationQuery,
+    variables: {},
+  };
+
+  const proxy = await getProxy();
+
+  if (proxy) {
+    return baseReq.send(params);
+  }
+
+  return baseReq.proxy(proxy).send(params);
+};
 
 /**
  * Get latest web page commit info

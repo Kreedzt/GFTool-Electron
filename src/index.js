@@ -37,6 +37,8 @@ const menuTemplate = [
             });
             return;
           }
+          
+          logger.info('detail', res);
           dialog.showMessageBox({
             type: 'info',
             detail: `comittedDate:${res.committedDate}\ncommitId:${res.oid}\ncommitMessage:${res.message}`,
@@ -50,6 +52,7 @@ const menuTemplate = [
 
           const res = await getApplicationRelease();
 
+
           if (!res) {
             dialog.showMessageBox({
               type: 'error',
@@ -58,6 +61,7 @@ const menuTemplate = [
             return;
           }
 
+          logger.info('detail', res);
           dialog.showMessageBox({
             type: 'info',
             detail: `version:${res.tagName}\ncreatedAt:${res.createdAt}\ndescription:${res.description}`,

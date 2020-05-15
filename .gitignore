@@ -3,6 +3,11 @@ versions/
 node_modules/
 .idea/
 dist/
-envFile
 web/
 *.log
+
+# config file
+envFile
+src/proxy
+src/releaseVersion
+src/webVersion

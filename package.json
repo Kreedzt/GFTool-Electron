@@ -57,6 +57,7 @@
   "dependencies": {
     "electron-log": "^4.1.2",
     "superagent": "^5.2.2",
+    "superagent-proxy": "^2.0.0",
     "v8-compile-cache": "^2.1.0"
   },
   "devDependencies": {
