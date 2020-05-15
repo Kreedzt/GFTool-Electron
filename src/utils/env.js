@@ -1,7 +1,8 @@
 const { app } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const log = require('electron-log');
-const { promisedReadFile } = require('./promisedFs');
+const { encode } = require('./promisedFs');
 const { isMacOS } = require('./checkOS');
 
 class EnvUtil {
@@ -12,11 +13,12 @@ class EnvUtil {
 
 const logger = log.scope('env.js');
 
-const setEnv = async () => {
+const setEnv = () => {
   if (EnvUtil.isEnvLocked) return;
   try {
-    EnvUtil.env = await promisedReadFile(
-      path.join(app.getAppPath(), 'src/envFile')
+    EnvUtil.env = fs.readFileSync(
+      path.join(app.getAppPath(), 'src/envFile'),
+      encode
     );
     // env = 'development';
     logger.info(`env set to ${EnvUtil.env}`);

@@ -181,14 +181,23 @@ const menuTemplate = [
         label: 'Manual update page',
         click: async () => {
           logger.info('manual updating...');
-          await updateRepo();
+          const isSuccessful = await updateRepo();
           if (mainWindow) {
             mainWindow.reload();
-            dialog.showMessageBox({
-              type: 'info',
-              title: 'update page',
-              detail: 'update page success'
-            });
+
+            if (isSuccessful) {
+              dialog.showMessageBox({
+                type: 'info',
+                title: 'update page',
+                detail: 'update page success'
+              }); 
+            } else {
+              dialog.showMessageBox({
+                type: 'error',
+                title: 'update page',
+                detail: 'update page error'
+              });
+            }
           }
         }
       },
@@ -274,8 +283,8 @@ function createWindow() {
   });
 }
 
-async function initialize() {
-  await setEnv();
+function initialize() {
+  setEnv();
   makeSingleInstance();
 
   app.whenReady().then(() => {
