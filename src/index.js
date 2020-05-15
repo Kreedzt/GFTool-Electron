@@ -27,20 +27,18 @@ const menuTemplate = [
         // enabled: false,
         accelerator: 'CmdOrCtrl+L',
         click: async () => {
-          logger.info('Get web page version fn');
+          logger.info('Get lastest web page version menu');
           const res = await getWebPageCommit();
 
           if (!res) {
             dialog.showMessageBox({
               type: 'error',
-              title: 'Lastest web page',
               detail: 'Get latest web page info error',
             });
             return;
           }
           dialog.showMessageBox({
             type: 'info',
-            title: 'Latest commit info',
             detail: `comittedDate:${res.committedDate}\ncommitId:${res.oid}\ncommitMessage:${res.message}`,
           });
         },
@@ -48,14 +46,13 @@ const menuTemplate = [
       {
         label: 'Get latest application release',
         click: async () => {
-          logger.info('Get latest application release fn');
+          logger.info('Get latest application release menu');
 
           const res = await getApplicationRelease();
 
           if (!res) {
             dialog.showMessageBox({
               type: 'error',
-              title: 'Lastest release',
               detail: 'Get latest release info error',
             });
             return;
@@ -63,11 +60,23 @@ const menuTemplate = [
 
           dialog.showMessageBox({
             type: 'info',
-            title: 'Latest release info',
             detail: `version:${res.tagName}\ncreatedAt:${res.createdAt}\ndescription:${res.description}`,
           });
         },
       },
+      {
+        label: 'Confirm dialog',
+        click: () => {
+          logger.info('Confirm dialog menu');
+          dialog.showMessageBox({
+            type: 'info',
+            detail: 'Confirm dialog menu',
+            buttons: ['Confirm', 'Cancel']
+          }).then(res => {
+            logger.info(res);
+          })
+        }
+      }
     ],
   },
   {
@@ -146,6 +155,7 @@ const menuTemplate = [
           return 'F11';
         })(),
         click: (item, focusedWindow) => {
+          logger.info('Toggle Full Screen menu');
           if (focusedWindow) {
             focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
           }
@@ -154,6 +164,7 @@ const menuTemplate = [
       {
         label: 'Toggle always on top',
         click: (item, focusedWindow) => {
+          logger.info('Toggle always on top menu');
           if (focusedWindow) {
             focusedWindow.setAlwaysOnTop(!focusedWindow.isAlwaysOnTop());
           }
@@ -168,6 +179,7 @@ const menuTemplate = [
           return 'Ctrl+Shift+I';
         })(),
         click: (item, focusedWindow) => {
+          logger.info('Toggle Developer Tools');
           if (focusedWindow) {
             focusedWindow.toggleDevTools();
           }
@@ -181,13 +193,12 @@ const menuTemplate = [
       {
         label: 'Copy url path',
         click: (item, focusedWindow) => {
-          logger.info('Copy url path');
+          logger.info('Copy url path menu');
           if (focusedWindow) {
             const url = focusedWindow.webContents.getURL();
             clipboard.writeText(url);
             dialog.showMessageBox({
               type: 'info',
-              title: 'Copy url path',
               detail: 'Copy url success! Now you can paste anywhere you want',
             });
           }
@@ -196,7 +207,7 @@ const menuTemplate = [
       {
         label: 'Open current link external',
         click: (item, focusedWindow) => {
-          logger.info('Open current link');
+          logger.info('Open current link menu');
           if (focusedWindow) {
             const url = focusedWindow.webContents.getURL();
             shell.openExternal(url);
@@ -211,7 +222,7 @@ const menuTemplate = [
       {
         label: 'Manual update page',
         click: async () => {
-          logger.info('manual updating...');
+          logger.info('Manual update page menu');
           const isSuccessful = await updateRepo();
           if (mainWindow) {
             mainWindow.reload();
@@ -219,13 +230,11 @@ const menuTemplate = [
             if (isSuccessful) {
               dialog.showMessageBox({
                 type: 'info',
-                title: 'update page',
                 detail: 'update page success',
               });
             } else {
               dialog.showMessageBox({
                 type: 'error',
-                title: 'update page',
                 detail: 'update page error',
               });
             }

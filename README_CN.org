@@ -34,22 +34,27 @@ issue (贴上你的 log 文件内容)
         npm i
       #+end_src
 
-   2. 克隆 web 项目
+   2. 添加 GitHub Token 到 ~src/config.js~
+      #+begin_src js
+        const AccessToken = '此处填入你的Github Token';
+      #+end_src
+
+   3. 克隆 web 项目
       #+begin_src shell
         git clone https://github.com/hycdes/GFTool.git web/ --depth=1
       #+end_src
 
-   3. 启动开发环境:
+   4. 启动开发环境:
       #+begin_src shell
         npm run start
       #+end_src
 
-   4. 为 Windows 环境构建:
+   5. 为 Windows 环境构建:
       #+begin_src shell
         npm run build:win
       #+end_src
 
-   5. 为 MacOS 环境构建:
+   6. 为 MacOS 环境构建:
       #+begin_src shell
         npm run build:mac
       #+end_src

@@ -42,31 +42,33 @@ const ApplicationQuery = `{
   }
 }`;
 
-const getRepoLastCommit = () => superagent
-  .post(`${BaseUrl}/graphql`)
-  .set('Authorization', AccessCode)
-  .set('User-Agent', 'request')
-  .timeout({
-    response: 3000, // 发送请求后 5 秒视为超时
-    deadline: 30000 // 允许响应延迟
-  })
-  .send({
-    query: RepoQuery,
-    variables: {}
-  });
+const getRepoLastCommit = () =>
+  superagent
+    .post(`${BaseUrl}/graphql`)
+    .set('Authorization', AccessCode)
+    .set('User-Agent', 'request')
+    .timeout({
+      response: 3000, // 发送请求后 5 秒视为超时
+      deadline: 30000, // 允许响应延迟
+    })
+    .send({
+      query: RepoQuery,
+      variables: {},
+    });
 
-const getLatestRelease = () => superagent
-      .post(`${BaseUrl}/graphql`)
-      .set('Authorization', AccessCode)
-      .set('User-Agent', 'request')
-      .timeout({
-        response: 3000, // 发送请求后 5 秒视为超时
-        deadline: 30000 // 允许响应延迟
-      })
-      .send({
-        query: ApplicationQuery,
-        variables: {}
-      });
+const getLatestRelease = () =>
+  superagent
+    .post(`${BaseUrl}/graphql`)
+    .set('Authorization', AccessCode)
+    .set('User-Agent', 'request')
+    .timeout({
+      response: 3000, // 发送请求后 5 秒视为超时
+      deadline: 30000, // 允许响应延迟
+    })
+    .send({
+      query: ApplicationQuery,
+      variables: {},
+    });
 
 /**
  * Get latest web page commit info
@@ -94,7 +96,7 @@ async function getWebPageCommit() {
 }
 
 /**
- *
+ * Get latest Application release info
  */
 async function getApplicationRelease() {
   logger.info('getApplicationRelease fn');
@@ -115,10 +117,10 @@ async function getApplicationRelease() {
   }
 
   return latestReleaseInfo;
-};
+}
 
 module.exports = {
   getRepoLastCommit,
   getWebPageCommit,
-  getApplicationRelease
+  getApplicationRelease,
 };
