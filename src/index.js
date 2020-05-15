@@ -11,6 +11,7 @@ const {
 const log = require('electron-log');
 const { getCorrectPath, setEnv } = require('./utils/env');
 const { getWebPageCommit, getApplicationRelease } = require('./utils/http');
+const { clearLog } = require('./utils/clearLog');
 const { isMacOS } = require('./utils/checkOS');
 const { updateRepo } = require('./update');
 
@@ -266,6 +267,22 @@ const menuTemplate = [
         click: () => {
           shell.openExternal('https://hycdes.com/');
         },
+      },
+      {
+        label: 'Clear log file',
+        click: async () => {
+          logger.info('Clear log file menu.');
+          try {
+            await clearLog();
+            dialog.showMessageBox({
+              type: 'info',
+              title: 'clear log',
+              detail: 'clear log success'
+            });
+          } catch(e) {
+            logger.error(e);
+          }
+        }
       },
       {
         label: `Current Version: ${app.getVersion()}`,
