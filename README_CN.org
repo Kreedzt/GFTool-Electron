@@ -1,0 +1,96 @@
+* GFTool-Electron
+
+该项目为 [[https://github.com/hycdes/GFTool][GFTool]] 的 Electron 桌面版本
+
+为了在离线场景下体验更好
+
+版本说明: 见 [[https://github.com/Kreedzt/GFTool-Electron/blob/master/CHANGELOG.org][Changelog]]
+
+
+注意:
+该项目目前处于 *非生产可用(不稳定)阶段*, 如果发现任何 bug 或有任何想法, 可提交
+issue (贴上你的 log 文件内容)
+
+** 路线图
+
+  - [X] manual update
+  - [X] manual open log menu
+  - [X] Clipboard crashed
+  - [ ] Auto open log when application crashed
+  - [ ] Auto update page(web)
+  - [ ] Auto update software
+
+** 构建
+   你的电脑必须首先安装 *nodejs* 环境, 见 [[https://nodejs.org/en/][Nodejs]] 如何安装.
+
+   1. 安装依赖
+      #+begin_src shell
+        # 这个项目使用 yarn.lock 文件锁定依赖, 推荐使用 yarn 安装依赖
+        yarn
+      #+end_src
+
+      或
+      #+begin_src shell
+        npm i
+      #+end_src
+
+   2. 克隆 web 项目
+      #+begin_src shell
+        git clone https://github.com/hycdes/GFTool.git web/ --depth=1
+      #+end_src
+
+   3. 启动开发环境:
+      #+begin_src shell
+        npm run start
+      #+end_src
+
+   4. 为 Windows 环境构建:
+      #+begin_src shell
+        npm run build:win
+      #+end_src
+
+   5. 为 MacOS 环境构建:
+      #+begin_src shell
+        npm run build:mac
+      #+end_src
+
+** 安装与使用
+
+   安装:
+   1. 依赖:
+      该程序使用 *git* 来进行 *手动更新*, 如果你的电脑没有 git, 手动更新菜单 *不
+      会生效*
+      所以若想要使 *手动更新* 菜单生效, 你的电脑必须安装 [[https://git-scm.com/][git]].
+
+   2. 跳转 [[https://github.com/Kreedzt/GFTool-Electron/releases][release]] 页面下载最新的构建包:
+      Windows系统: 下载 ~exe~ 文件(已在 Windows 10 1909 上测试)
+      MacOS系统, 下载 ~dmg~ 文件(已在 MacOS 10.13.6 上测试)
+
+
+   *注意*: 因为 electron 的技术限制, 你 *必须* 使用 *快捷键* 代替
+   页面内容的 "Copy" 或 "Paste" 按钮.
+
+   详情见编辑菜单
+
+   使用:
+   菜单(对MacOS系统, 菜单位于状态栏):
+   - Test(Or GFTool-Electron(The app name))
+     + Get lastest web page version: 获取页面内容的最新提交信息
+   - Edit(代替页面内容的复制粘贴操作, 非常 *重要*)
+     + SelectAll: 快捷键: ~Ctrl+A~ 或 ~Cmd+A~
+     + Cut: 快捷键: ~Ctrl+X~ 或 ~Cmd+X~
+     + Copy: 快捷键: ~Ctrl+C~ 或 ~Cmd+C~
+     + Paste: 快捷键: ~Ctrl+V~ 或 ~Cmd+V~
+   - Actions
+     + Copy url Path: 复制当前页面内容地址到剪贴板
+     + Open current link: 在外部浏览器打开当前地址
+   - View
+     + Reload: 刷新当前页面
+     + Toggle Full Screen: 切换全屏
+     + Toggle Developer Tools: 切换开发人员工具(请确认你知道你在做什么)
+   - About
+     + Manual Update Page: 手动拉取代码更新 [[https://github.com/hycdes/GFTool][GFTool]] (通过 git)
+     + Open Logs file: 打开日志文件(为提交 issue 做准备)
+
+** License
+   [[https://github.com/Kreedzt/GFTool-Electron/blob/master/LICENSE][MIT]]

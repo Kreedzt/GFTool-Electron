@@ -1,8 +1,12 @@
 * GFTool-Electron
 
+translation: [[https://github.com/Kreedzt/GFTool-Electron/blob/master/README_CN.org][中文]]
+
 This project is [[https://github.com/hycdes/GFTool][GFTool]] electron version.
 
 It experience better for offline use
+
+More version info: See [[https://github.com/Kreedzt/GFTool-Electron/blob/master/CHANGELOG.org][Changelog]]
 
 Tips:
 This project is currently *NOT STABLE*, if you found some bug or have some
@@ -72,7 +76,7 @@ advice, please open an issue(paste your log file content).
    Usage:
    Menus(For MacOS, Check your Title bar):
    - Test(Or GFTool-Electron(The app name))
-     + Test Github Request...: TODO
+     + Get lastest web page version: get lastest web page commit info
    - Edit(Override web contents clipboard, which is very *IMPORANT*)
      + SelectAll: shorcut: ~Ctrl+A~ or ~Cmd+A~
      + Cut: shorcut: ~Ctrl+X~ or ~Cmd+X~
