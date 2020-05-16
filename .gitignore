@@ -9,5 +9,5 @@ web/
 # config file
 envFile
 src/proxy
-src/releaseVersion
-src/webVersion
+src/appVersion.json
+src/webPageVersion.json

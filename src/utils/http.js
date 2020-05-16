@@ -44,51 +44,51 @@ const ApplicationQuery = `{
   }
 }`;
 
-const getRepoLastCommit = async () => {
-  const baseReq = superagent
-    .post(`${BaseUrl}/graphql`)
-    .set('Authorization', AccessCode)
-    .set('User-Agent', 'request')
-    .timeout({
-      response: 3000, // 发送请求后 5 秒视为超时
-      deadline: 30000, // 允许响应延迟
-    });
+const baseReq = superagent
+  .post(`${BaseUrl}/graphql`)
+  .set('Authorization', AccessCode)
+  .set('User-Agent', 'request')
+  .timeout({
+    response: 3000, // 发送请求后 5 秒视为超时
+    deadline: 30000 // 允许响应延迟
+  });
 
+const getRepoLastCommit = async () => {
   const params = {
     query: RepoQuery,
-    variables: {},
+    variables: {}
   };
 
-  const proxy = await getProxy();
-
-  if (proxy) {
-    return baseReq.send(params);
+  try {
+    const proxy = await getProxy();
+    if (proxy) {
+      return baseReq.proxy(proxy).send(params);
+    }
+  } catch (e) {
+    logger.error(e);
   }
-  return baseReq.proxy(proxy).send(params);
+
+  return baseReq.send(params);
 };
 
 const getLatestRelease = async () => {
-  const baseReq = superagent
-    .post(`${BaseUrl}/graphql`)
-    .set('Authorization', AccessCode)
-    .set('User-Agent', 'request')
-    .timeout({
-      response: 3000, // 发送请求后 5 秒视为超时
-      deadline: 30000, // 允许响应延迟
-    });
-
   const params = {
     query: ApplicationQuery,
-    variables: {},
+    variables: {}
   };
 
-  const proxy = await getProxy();
-
-  if (proxy) {
-    return baseReq.send(params);
+  let proxy;
+  try {
+    proxy = await getProxy();
+  } catch (e) {
+    logger.error(e);
   }
 
-  return baseReq.proxy(proxy).send(params);
+  if (proxy) {
+    return baseReq.proxy(proxy).send(params);
+  }
+
+  return baseReq.send(params);
 };
 
 /**
@@ -143,5 +143,5 @@ async function getApplicationRelease() {
 module.exports = {
   getRepoLastCommit,
   getWebPageCommit,
-  getApplicationRelease,
+  getApplicationRelease
 };

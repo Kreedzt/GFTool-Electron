@@ -1,18 +1,13 @@
-const fs = require('fs');
 const { promisedReadFile, promisedWriteFile } = require('./promisedFs');
 const { getCorrectPath } = require('./env');
 
-const proxyFilePath = getCorrectPath('proxy');
+const proxyFilePath = getCorrectPath('src/proxy');
 
-const setProxy = async (proxyUrl) => {
-  return promisedWriteFile(proxyFilePath, proxyUrl);
-};
+const setProxy = async proxyUrl => promisedWriteFile(proxyFilePath, proxyUrl);
 
-const getProxy = async () => {
-  return promisedReadFile(proxyFilePath);
-};
+const getProxy = async () => promisedReadFile(proxyFilePath);
 
 module.exports = {
   setProxy,
   getProxy
-}
+};

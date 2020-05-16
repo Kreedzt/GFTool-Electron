@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node envTool.js development && electron .",
     "lint:fix": "eslint --fix src/**/*.js",
+    "tagVersion": "node setVersion.js",
     "build:win": "node envTool.js production && npm run lint:fix && electron-builder -w",
     "build:mac": "node envTool.js production && npm run lint:fix && electron-builder -m"
   },
