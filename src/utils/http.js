@@ -44,14 +44,20 @@ const ApplicationQuery = `{
   }
 }`;
 
-const baseReq = superagent
-  .post(`${BaseUrl}/graphql`)
-  .set('Authorization', AccessCode)
-  .set('User-Agent', 'request')
-  .timeout({
-    response: 3000, // 发送请求后 5 秒视为超时
-    deadline: 30000 // 允许响应延迟
-  });
+/**
+ * Every time create a new instance
+ * avoid before res take info next request bug
+ * @return {Promise}
+ */
+const getBaseReq = () =>
+  superagent
+    .post(`${BaseUrl}/graphql`)
+    .set('Authorization', AccessCode)
+    .set('User-Agent', 'request')
+    .timeout({
+      response: 3000, // 发送请求后 5 秒视为超时
+      deadline: 30000 // 允许响应延迟
+    });
 
 const getRepoLastCommit = async () => {
   const params = {
@@ -62,13 +68,15 @@ const getRepoLastCommit = async () => {
   try {
     const proxy = await getProxy();
     if (proxy) {
-      return baseReq.proxy(proxy).send(params);
+      return getBaseReq()
+        .proxy(proxy)
+        .send(params);
     }
   } catch (e) {
     logger.error(e);
   }
 
-  return baseReq.send(params);
+  return getBaseReq().send(params);
 };
 
 const getLatestRelease = async () => {
@@ -85,10 +93,12 @@ const getLatestRelease = async () => {
   }
 
   if (proxy) {
-    return baseReq.proxy(proxy).send(params);
+    return getBaseReq()
+      .proxy(proxy)
+      .send(params);
   }
 
-  return baseReq.send(params);
+  return getBaseReq().send(params);
 };
 
 /**
