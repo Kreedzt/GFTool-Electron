@@ -9,5 +9,10 @@ web/
 # config file
 envFile
 src/proxy
-src/appVersion.json
-src/webPageVersion.json
+src/webVersion.json
+src/releaseVersion.json
+
+#index file
+GPATH
+GRTAGS
+GTAGS

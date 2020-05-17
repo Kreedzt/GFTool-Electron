@@ -68,8 +68,8 @@ issue (贴上你的 log 文件内容)
       所以若想要使 *手动更新* 菜单生效, 你的电脑必须安装 [[https://git-scm.com/][git]].
 
    2. 跳转 [[https://github.com/Kreedzt/GFTool-Electron/releases][release]] 页面下载最新的构建包:
-      Windows系统: 下载 ~exe~ 文件(已在 Windows 10 1909 上测试)
-      MacOS系统, 下载 ~dmg~ 文件(已在 MacOS 10.13.6 上测试)
+      Windows 系统: 下载 ~exe~ 文件(已在 Windows 10 1909 上测试)
+      MacOS 系统, 下载 ~dmg~ 文件(已在 MacOS 10.13.6 上测试)
 
 
    *注意*: 因为 electron 的技术限制, 你 *必须* 使用 *快捷键* 代替
@@ -78,7 +78,7 @@ issue (贴上你的 log 文件内容)
    详情见编辑菜单
 
    使用:
-   菜单(对MacOS系统, 菜单位于状态栏):
+   菜单(对 MacOS 系统, 菜单位于状态栏):
    - Test(Or GFTool-Electron(The app name))
      + Get lastest web page version: 获取页面内容的最新提交信息
    - Edit(代替页面内容的复制粘贴操作, 非常 *重要*)

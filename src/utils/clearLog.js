@@ -8,8 +8,8 @@ const logger = log.scope('clearLog.js');
 const clearLog = async () => {
   logger.info('clearLog fn');
   return promisedWriteFile(logFilePath, '');
-}
+};
 
 module.exports = {
   clearLog
-}
+};

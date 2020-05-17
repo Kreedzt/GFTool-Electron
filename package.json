@@ -10,9 +10,9 @@
   "scripts": {
     "start": "node envTool.js development && electron .",
     "lint:fix": "eslint --fix src/**/*.js",
-    "tagVersion": "node setVersion.js",
-    "build:win": "node envTool.js production && npm run lint:fix && electron-builder -w",
-    "build:mac": "node envTool.js production && npm run lint:fix && electron-builder -m"
+    "tag-version": "node envTool.js production && npm run lint:fix && node setVersion.js",
+    "build:win": "npm run tag-version && electron-builder -w",
+    "build:mac": "npm run tag-version && electron-builder -m"
   },
   "build": {
     "appId": "com.gftool.electron.app",

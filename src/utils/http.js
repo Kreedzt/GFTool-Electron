@@ -46,7 +46,7 @@ const ApplicationQuery = `{
 
 /**
  * Every time create a new instance
- * avoid before res take info next request bug
+ * avoid before res take info to next request bug
  * @return {Promise}
  */
 const getBaseReq = () =>

@@ -33,9 +33,17 @@ const isDevelopment = () => EnvUtil.env === 'development';
 
 const getCorrectPath = targetPath => {
   logger.info('targetPath:', targetPath);
+  let returnPath = '';
+
+  // judgement if env is not electron runtime
+  if (!app) {
+    // returnPath = path.join('../../', targetPath);
+    return targetPath;
+  }
+
   logger.info('App Path:', app.getAppPath());
   logger.info('current Env:', EnvUtil.env);
-  let returnPath = '';
+
   if (isDevelopment()) {
     returnPath = path.join(app.getAppPath(), targetPath);
   } else if (isMacOS()) {
