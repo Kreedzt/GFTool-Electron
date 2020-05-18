@@ -25,6 +25,12 @@ const autoUpdateWebPage = async () => {
       const isSuccess = await updateRepo();
       isUpdated = true;
       code = isSuccess ? 0 : -1;
+
+      // when success, write version info to file
+      if (isSuccess) {
+        await promisedWriteFile(getCorrectPath('src/webVersion.json'), JSON.stringify(latestInfo, null, 2));
+        logger.info('write latest web page version info success');
+      }
     }
   } catch(e) {
     code = -1;
