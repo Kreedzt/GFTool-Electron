@@ -1,14 +1,14 @@
 * Changelog
 
 ** 0.2.0
-   - Feature: Add Proxy Config Menu
+   - Feature: Add proxy config Menu
    - Feature: Add always on top menu
-   - Improvement: speed up application start performance
    - Feature: Add auto update web page
    - Feature: Add auto detect application release
+   - Improvement: Speed up application start performance
 
 ** 0.1.0
    - Feature: Add Actions Menu, easier to copy url to use external browser open web page
    - Feature: Unlock Github api request menu
-   - Improvement: improve application start performance
+   - Improvement: Improve application start performance
 
