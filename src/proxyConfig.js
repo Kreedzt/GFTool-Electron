@@ -1,14 +1,13 @@
 const {
-  app,
+  protocol,
   BrowserWindow,
-  Menu,
-  MenuItem,
-  dialog,
-  shell,
-  clipboard
+  ipcMain
 } = require('electron');
 const log = require('electron-log');
 const { getCorrectPath } = require('./utils/env');
+const { getProxy, setProxy } = require('./utils/proxy');
+
+const logger = log.scope('proxyConfig.js');
 
 let proxyWindow = null;
 
@@ -36,6 +35,33 @@ const initializeWindow = () => {
     }); 
   }
 }
+
+ipcMain.on('getProxy', async (event, callback) => {
+  logger.info('ipcMain getProxy listener', event, callback);
+
+  try {
+    const proxy = await getProxy();
+    logger.info('ipcMain getProxy res', proxy);
+
+    event.reply('getProxy-success', proxy);
+  } catch(e) {
+    logger.error('ipcMain getProxy error', e);
+    event.reply('getProxy-error', e);
+  }
+});
+
+ipcMain.on('setProxy', async (event, url) => {
+  logger.info('ipcMain setProxy listener', event, url);
+
+  try {
+    await setProxy(url);
+    logger.info('ipcMain setProxy success', url);
+    event.reply('setProxy-success');
+  } catch(e) {
+    logger.error('ipcMain setProxy error', e);
+    event.reply('setProxy-error', e);
+  }
+})
 
 module.exports = {
   initializeWindow

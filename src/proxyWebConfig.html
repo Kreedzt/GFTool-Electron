@@ -23,31 +23,36 @@
       Save
     </button>
     <script>
-     const log = require('electron-log');
-     const { getProxy, setProxy } = require('./utils/proxy');
+      const { ipcRenderer } = require('electron');
 
-     const logger = log.scope('proxyWebConfig.html');
-     window.onload = () => {
-       const inputEl = document.getElementById('proxy_input');
-       const buttonEl = document.getElementById('save_btn');
-       
-       getProxy().then(res => {
-         logger.info('getProxy res', res);
-         inputEl.value = res;
-       })
-       
-       buttonEl.addEventListener('click', () => {
-         console.log('inputEl val', inputEl.value);
-         logger.info('inputEl val', inputEl.value);
-         
-         setProxy(inputEl.value).then(() => {
-           window.alert('Save proxy success');
-         }).catch(e => {
-           logger.error(e);
-           console.error(e);
-         })
-       });
-     };
+      window.onload = () => {
+        const inputEl = document.getElementById('proxy_input');
+        const buttonEl = document.getElementById('save_btn');
+
+        ipcRenderer.send('getProxy');
+
+        ipcRenderer.on('getProxy-success', (ev, url) => {
+          inputEl.value = url;
+        });
+
+        ipcRenderer.on('getProxy-error', (ev, err) => {
+          window.alert('getProxy error', err);
+        });
+
+        buttonEl.addEventListener('click', () => {
+          console.log('inputEl val', inputEl.value);
+
+          ipcRenderer.send('setProxy', inputEl.value);
+        });
+
+        ipcRenderer.on('setProxy-success', () => {
+          window.alert('Save proxy success');
+        });
+
+        ipcRenderer.on('setProxy-error', (ev, e) => {
+          window.alert('Save proxy error', e);
+        });
+      };
     </script>
   </body>
 </html>
