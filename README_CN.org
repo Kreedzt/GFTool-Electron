@@ -16,7 +16,7 @@ issue (贴上你的 log 文件内容)
   - [X] 手动更新页面
   - [X] 手动打开日志文件
   - [X] 修复剪贴板问题
-  - [X] 自动更新web页面
+  - [X] 自动更新 web 页面
   - [X] 自动检测程序更新
   - [X] 增加代理配置
   - [ ] 应用崩溃时自动打开日志
@@ -45,17 +45,28 @@ issue (贴上你的 log 文件内容)
         git clone https://github.com/hycdes/GFTool.git web/ --depth=1
       #+end_src
 
-   4. 启动开发环境:
+   4. 初始化环境配置
+      当你没有 ~/config~ 文件夹时, 执行以下命令
+      #+begin_src shell
+        npm run initialize-config
+      #+end_src
+
+      设置版本信息
+      #+begin_src shell
+        npm run tag-version
+      #+end_src
+
+   5. 启动开发环境:
       #+begin_src shell
         npm run start
       #+end_src
 
-   5. 为 Windows 环境构建:
+   6. 为 Windows 环境构建:
       #+begin_src shell
         npm run build:win
       #+end_src
 
-   6. 为 MacOS 环境构建:
+   7. 为 MacOS 环境构建:
       #+begin_src shell
         npm run build:mac
       #+end_src

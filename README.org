@@ -47,17 +47,28 @@ advice, please open an issue(paste your log file content).
         git clone https://github.com/hycdes/GFTool.git web/ --depth=1
       #+end_src
 
-   4. Start dev:
+   4. Initialize env
+      when you don't have ~/config~ folder, run this command
+      #+begin_src shell
+        npm run initialize-config
+      #+end_src
+
+      set config version
+      #+begin_src shell
+        npm run tag-version
+      #+end_src
+
+   5. Start dev:
       #+begin_src shell
         npm run start
       #+end_src
 
-   5. Build for Windows:
+   6. Build for Windows:
       #+begin_src shell
         npm run build:win
       #+end_src
 
-   6. Build for MacOS:
+   7. Build for MacOS:
       #+begin_src shell
         npm run build:mac
       #+end_src
