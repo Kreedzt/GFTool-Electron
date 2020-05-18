@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "node envTool.js development && electron .",
+    "start": "electron .",
     "lint:fix": "eslint --fix src/**/*.js",
-    "tag-version": "node envTool.js production && npm run lint:fix && node setVersion.js",
+    "tag-version": "npm run lint:fix && node setVersion.js",
     "build:win": "npm run tag-version && electron-builder -w",
     "build:mac": "npm run tag-version && electron-builder -m"
   },
