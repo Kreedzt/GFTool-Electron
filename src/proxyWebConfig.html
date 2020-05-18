@@ -36,7 +36,9 @@
         });
 
         ipcRenderer.on('getProxy-error', (ev, err) => {
-          window.alert('getProxy error', err);
+          window.alert('getProxy-error');
+          console.log('getProxy-error');
+          console.dir(err);
         });
 
         buttonEl.addEventListener('click', () => {

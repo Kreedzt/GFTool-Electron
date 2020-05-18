@@ -1,8 +1,4 @@
-const {
-  protocol,
-  BrowserWindow,
-  ipcMain
-} = require('electron');
+const { BrowserWindow, ipcMain } = require('electron');
 const log = require('electron-log');
 const { getCorrectPath } = require('./utils/env');
 const { getProxy, setProxy } = require('./utils/proxy');
@@ -20,8 +16,8 @@ const initializeWindow = () => {
       height: 200,
       backgroundColor: '#fff',
       webPreferences: {
-        nodeIntegration: true
-      }
+        nodeIntegration: true,
+      },
     });
 
     proxyWindow.loadFile(getCorrectPath('src/proxyWebConfig.html', './'));
@@ -32,9 +28,9 @@ const initializeWindow = () => {
 
     proxyWindow.once('ready-to-show', () => {
       proxyWindow.show();
-    }); 
+    });
   }
-}
+};
 
 ipcMain.on('getProxy', async (event, callback) => {
   logger.info('ipcMain getProxy listener', event, callback);
@@ -44,7 +40,7 @@ ipcMain.on('getProxy', async (event, callback) => {
     logger.info('ipcMain getProxy res', proxy);
 
     event.reply('getProxy-success', proxy);
-  } catch(e) {
+  } catch (e) {
     logger.error('ipcMain getProxy error', e);
     event.reply('getProxy-error', e);
   }
@@ -57,12 +53,12 @@ ipcMain.on('setProxy', async (event, url) => {
     await setProxy(url);
     logger.info('ipcMain setProxy success', url);
     event.reply('setProxy-success');
-  } catch(e) {
+  } catch (e) {
     logger.error('ipcMain setProxy error', e);
     event.reply('setProxy-error', e);
   }
-})
+});
 
 module.exports = {
-  initializeWindow
+  initializeWindow,
 };

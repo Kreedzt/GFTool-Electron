@@ -2,9 +2,20 @@ const fs = require('fs');
 
 const encode = 'utf8';
 
-const promisedExistFile = (...params) =>
+const promisedAccessFile = (...params) =>
   new Promise((resolve, reject) => {
     fs.access(...params, fs.constants.R_OK, err => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+
+const promisedMkdir = (...params) =>
+  new Promise((resolve, reject) => {
+    fs.mkdir(...params, err => {
       if (err) {
         reject(err);
       } else {
@@ -48,8 +59,9 @@ const promisedReadDir = (...params) =>
 
 module.exports = {
   encode,
-  promisedExistFile,
+  promisedAccessFile,
   promisedReadFile,
   promisedWriteFile,
-  promisedReadDir
+  promisedMkdir,
+  promisedReadDir,
 };
