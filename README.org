@@ -19,8 +19,8 @@ advice, please open an issue(paste your log file content).
   - [X] Clipboard crashed
   - [X] Auto update page(web)
   - [X] Auto detected update software
+  - [X] Add proxy config
   - [ ] Auto open log when application crashed
-  - [ ] Add proxy config
 
 ** Build
    You must have *nodejs* environment first, See [[https://nodejs.org/en/][Nodejs]] to how to install.
@@ -91,6 +91,8 @@ advice, please open an issue(paste your log file content).
    - Actions
      + Copy url Path: copy the link address to your clipboard
      + Open current link: open link external(By your browser)
+   - Config
+     + Proxy: set http request proxy address(This effect update request)
    - View
      + Reload: Reload The Web page
      + Toggle Full Screen

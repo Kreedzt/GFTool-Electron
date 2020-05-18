@@ -18,8 +18,8 @@ issue (贴上你的 log 文件内容)
   - [X] 修复剪贴板问题
   - [X] 自动更新web页面
   - [X] 自动检测程序更新
+  - [X] 增加代理配置
   - [ ] 应用崩溃时自动打开日志
-  - [ ] 增加代理配置
 
 ** 构建
    你的电脑必须首先安装 *nodejs* 环境, 见 [[https://nodejs.org/en/][Nodejs]] 如何安装.
@@ -90,6 +90,8 @@ issue (贴上你的 log 文件内容)
    - Actions
      + Copy url Path: 复制当前页面内容地址到剪贴板
      + Open current link: 在外部浏览器打开当前地址
+   - Config
+     + Proxy: 设置网络连接代理(该项影响更新功能)
    - View
      + Reload: 刷新当前页面
      + Toggle Full Screen: 切换全屏
