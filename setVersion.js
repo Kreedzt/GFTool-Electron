@@ -17,19 +17,23 @@ const initializeEnv = async () => {
     await promisedMkdir(path.join(__dirname, 'config'));
   }
 
-  fs.writeFileSync(
-    path.join(__dirname, './config/webVersion.json'),
-    JSON.stringify(commitInfo || {}, null, 2),
-    encode
-  );
+  if (commitInfo) {
+    fs.writeFileSync(
+      path.join(__dirname, './config/webVersion.json'),
+      JSON.stringify(commitInfo, null, 2),
+      encode
+    );
+  }
 
   const releaseInfo = await getApplicationRelease();
 
-  fs.writeFileSync(
-    path.join(__dirname, './config/releaseVersion.json'),
-    JSON.stringify(releaseInfo || {}, null, 2),
-    encode
-  );
+  if (releaseInfo) {
+    fs.writeFileSync(
+      path.join(__dirname, './config/releaseVersion.json'),
+      JSON.stringify(releaseInfo, null, 2),
+      encode
+    );
+  }
 
   try {
     await promisedAccessFile(path.join(__dirname, 'config/proxy'));

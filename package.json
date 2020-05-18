@@ -9,6 +9,7 @@
   "private": false,
   "scripts": {
     "start": "electron .",
+    "initialize-config": "node autoCreateConfigFile.js",
     "lint:fix": "eslint --fix src/**/*.js",
     "tag-version": "npm run lint:fix && node setVersion.js",
     "build:win": "npm run tag-version && electron-builder -w",

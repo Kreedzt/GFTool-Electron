@@ -19,7 +19,6 @@ const {
 } = require('./utils/autoUpdate');
 const { updateRepo } = require('./update');
 const { initializeWindow } = require('./proxyConfig');
-const { autoCreateConfigFile } = require('./utils/autoCreateConfigFile');
 
 let mainWindow = null;
 
@@ -337,8 +336,6 @@ function createWindow() {
   });
 
   mainWindow.loadFile(targetPath).then(async () => {
-    // auto create config file
-    await autoCreateConfigFile();
     const [resCode, isUpdated] = await autoUpdateWebPage();
 
     if (!resCode && isUpdated) {
