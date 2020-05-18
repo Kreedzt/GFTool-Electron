@@ -1,35 +1,11 @@
 const { app } = require('electron');
 const path = require('path');
-const fs = require('fs');
 const log = require('electron-log');
-const { encode } = require('./promisedFs');
 const { isMacOS } = require('./checkOS');
-
-class EnvUtil {
-  static env = 'development';
-
-  static isEnvLocked = false;
-}
 
 const logger = log.scope('env.js');
 
-const setEnv = () => {
-  if (EnvUtil.isEnvLocked) return;
-  try {
-    EnvUtil.env = fs.readFileSync(
-      path.join(app.getAppPath(), 'src/envFile'),
-      encode
-    );
-    // env = 'development';
-    logger.info(`env set to ${EnvUtil.env}`);
-  } catch (e) {
-    logger.error('read env file error', e);
-    // env = 'production';
-  }
-  EnvUtil.isEnvLocked = true;
-};
-
-const isDevelopment = () => EnvUtil.env === 'development';
+const isDevelopment = () => !app.isPackaged;
 
 const getCorrectPath = targetPath => {
   logger.info('targetPath:', targetPath);
@@ -37,12 +13,11 @@ const getCorrectPath = targetPath => {
 
   // judgement if env is not electron runtime
   if (!app) {
-    // returnPath = path.join('../../', targetPath);
     return targetPath;
   }
 
   logger.info('App Path:', app.getAppPath());
-  logger.info('current Env:', EnvUtil.env);
+  logger.info('isProduction Env:', app.isPackaged);
 
   if (isDevelopment()) {
     returnPath = path.join(app.getAppPath(), targetPath);
@@ -57,7 +32,6 @@ const getCorrectPath = targetPath => {
 };
 
 module.exports = {
-  setEnv,
   isDevelopment,
   getCorrectPath,
 };

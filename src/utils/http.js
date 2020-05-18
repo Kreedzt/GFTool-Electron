@@ -68,6 +68,7 @@ const getRepoLastCommit = async () => {
   try {
     const proxy = await getProxy();
     if (proxy) {
+      logger.info('proxy: ', proxy);
       return getBaseReq()
         .proxy(proxy)
         .send(params);
@@ -93,6 +94,7 @@ const getLatestRelease = async () => {
   }
 
   if (proxy) {
+    logger.info('proxy: ', proxy);
     return getBaseReq()
       .proxy(proxy)
       .send(params);

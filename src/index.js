@@ -9,7 +9,7 @@ const {
   clipboard
 } = require('electron');
 const log = require('electron-log');
-const { getCorrectPath, setEnv } = require('./utils/env');
+const { getCorrectPath } = require('./utils/env');
 const { getWebPageCommit, getApplicationRelease } = require('./utils/http');
 const { clearLog } = require('./utils/clearLog');
 const { isMacOS } = require('./utils/checkOS');
@@ -346,7 +346,6 @@ function createWindow() {
 }
 
 function initialize() {
-  setEnv();
   makeSingleInstance();
 
   app.whenReady().then(() => {
