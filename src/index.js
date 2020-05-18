@@ -13,6 +13,7 @@ const { getCorrectPath } = require('./utils/env');
 const { getWebPageCommit, getApplicationRelease } = require('./utils/http');
 const { clearLog } = require('./utils/clearLog');
 const { isMacOS } = require('./utils/checkOS');
+const { autoUpdateWebPage, checkApplicationRelease } = require('./utils/autoUpdate');
 const { updateRepo } = require('./update');
 
 let mainWindow = null;
@@ -334,7 +335,17 @@ function createWindow() {
     backgroundColor: '#fff'
   });
 
-  mainWindow.loadFile(targetPath);
+  mainWindow.loadFile(targetPath).then(async () => {
+    const [resCode, isUpdated] = await autoUpdateWebPage();
+
+    if (!resCode && isUpdated) {
+      mainWindow.reload();
+      dialog.showMessageBox({
+        type: 'info',
+        detail: 'update page success'
+      });
+    }
+  })
 
   mainWindow.on('closed', () => {
     mainWindow = null;
