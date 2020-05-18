@@ -25,7 +25,7 @@ const initializeWindow = () => {
       }
     });
 
-    proxyWindow.loadFile(getCorrectPath('src/proxyWebConfig.html'));
+    proxyWindow.loadFile(getCorrectPath('src/proxyWebConfig.html', './'));
 
     proxyWindow.on('closed', () => {
       proxyWindow = null;

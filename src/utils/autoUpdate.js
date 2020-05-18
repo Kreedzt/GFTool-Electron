@@ -17,7 +17,7 @@ const autoUpdateWebPage = async () => {
   let isUpdated = false;
   logger.info('autoUpdateWebPage fn');
   try {
-    const currentInfo = JSON.parse(await promisedReadFile(getCorrectPath('src/webVersion.json')));
+    const currentInfo = JSON.parse(await promisedReadFile(getCorrectPath('config/webVersion.json')));
     logger.info('current web page version', currentInfo);
     const latestInfo = await getWebPageCommit();
     logger.info('latest web page version', latestInfo);
@@ -33,7 +33,7 @@ const autoUpdateWebPage = async () => {
 
       // when success, write version info to file
       if (isSuccess) {
-        await promisedWriteFile(getCorrectPath('src/webVersion.json'), JSON.stringify(latestInfo, null, 2));
+        await promisedWriteFile(getCorrectPath('config/webVersion.json'), JSON.stringify(latestInfo, null, 2));
         logger.info('write latest web page version info success');
       }
     }
@@ -52,7 +52,7 @@ const checkApplicationRelease = async () => {
   logger.info('checkApplicationRelease fn');
 
   try {
-    const currentInfo = JSON.parse(await promisedReadFile(getCorrectPath('src/releaseVersion.json')));
+    const currentInfo = JSON.parse(await promisedReadFile(getCorrectPath('config/releaseVersion.json')));
     logger.info('current release version', currentInfo);
     const latestInfo = await getApplicationRelease();
     logger.info('latest application release version', latestInfo);

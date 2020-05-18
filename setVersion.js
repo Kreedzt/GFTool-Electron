@@ -8,7 +8,7 @@ const initializeEnv = async () => {
 
   if (commitInfo) {
     fs.writeFileSync(
-      path.join(__dirname, './src/webVersion.json'),
+      path.join(__dirname, './config/webVersion.json'),
       JSON.stringify(commitInfo, null, 2),
       encode
     );
@@ -18,7 +18,7 @@ const initializeEnv = async () => {
 
   if (releaseInfo) {
     fs.writeFileSync(
-      path.join(__dirname, './src/releaseVersion.json'),
+      path.join(__dirname, './config/releaseVersion.json'),
       JSON.stringify(releaseInfo, null, 2),
       encode
     );

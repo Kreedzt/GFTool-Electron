@@ -7,7 +7,7 @@ const logger = log.scope('env.js');
 
 const isDevelopment = () => !app.isPackaged;
 
-const getCorrectPath = targetPath => {
+const getCorrectPath = (targetPath, customLevelPath) => {
   logger.info('targetPath:', targetPath);
   let returnPath = '';
 
@@ -23,9 +23,9 @@ const getCorrectPath = targetPath => {
     returnPath = path.join(app.getAppPath(), targetPath);
   } else if (isMacOS()) {
     logger.info('system: macos');
-    returnPath = path.join(app.getAppPath(), '../../', targetPath);
+    returnPath = path.join(app.getAppPath(), customLevelPath || '../../', targetPath);
   } else {
-    returnPath = path.join(app.getAppPath(), '../../', targetPath);
+    returnPath = path.join(app.getAppPath(), customLevelPath || '../../', targetPath);
   }
   logger.info('returnPath:', returnPath);
   return returnPath;

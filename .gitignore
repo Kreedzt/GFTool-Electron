@@ -7,10 +7,7 @@ web/
 *.log
 
 # config file
-envFile
-src/proxy
-src/webVersion.json
-src/releaseVersion.json
+config/
 
 #index file
 GPATH

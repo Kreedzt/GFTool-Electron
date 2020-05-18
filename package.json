@@ -30,6 +30,13 @@
         "filter": [
           "**/*"
         ]
+      },
+      {
+        "from": "config",
+        "to": "config",
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "nsis": {

@@ -1,7 +1,7 @@
 const { promisedReadFile, promisedWriteFile } = require('./promisedFs');
 const { getCorrectPath } = require('./env');
 
-const proxyFilePath = getCorrectPath('src/proxy');
+const proxyFilePath = getCorrectPath('config/proxy');
 
 const setProxy = async proxyUrl => promisedWriteFile(proxyFilePath, proxyUrl);
 
