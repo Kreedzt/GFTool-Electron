@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="Proxy window"
+      content="Proxy window, you can edit proxy config here"
+    />
+    <title>Proxy config</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <input
+      id="proxy_input"
+      name="proxy"
+      type="text"
+      width="80%"
+      placeholder="Enter your proxy addr here, example: http://127.0.0.1:7890"
+    />
+    <button id="save_btn">
+      Save
+    </button>
+    <script>
+     const log = require('electron-log');
+     const { getProxy, setProxy } = require('./utils/proxy');
+
+     const logger = log.scope('proxyWebConfig.html');
+     window.onload = () => {
+       const inputEl = document.getElementById('proxy_input');
+       const buttonEl = document.getElementById('save_btn');
+       
+       getProxy().then(res => {
+         logger.info('getProxy res', res);
+         inputEl.value = res;
+       })
+       
+       buttonEl.addEventListener('click', () => {
+         console.log('inputEl val', inputEl.value);
+         logger.info('inputEl val', inputEl.value);
+         
+         setProxy(inputEl.value).then(() => {
+           window.alert('Save proxy success');
+         }).catch(e => {
+           logger.error(e);
+           console.error(e);
+         })
+       });
+     };
+    </script>
+  </body>
+</html>

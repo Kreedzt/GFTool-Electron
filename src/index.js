@@ -15,6 +15,7 @@ const { clearLog } = require('./utils/clearLog');
 const { isMacOS } = require('./utils/checkOS');
 const { autoUpdateWebPage, checkApplicationRelease } = require('./utils/autoUpdate');
 const { updateRepo } = require('./update');
+const { initializeWindow } = require('./proxyConfig');
 
 let mainWindow = null;
 
@@ -130,6 +131,17 @@ const menuTemplate = [
             focusedWindow.webContents.paste();
             logger.info('Paste: window contents', focusedWindow.webContents);
           }
+        }
+      }
+    ]
+  },
+  {
+    label: 'Config',
+    submenu: [
+      {
+        label: 'Proxy',
+        click: (item, focusedWindow) => {
+          initializeWindow();
         }
       }
     ]
