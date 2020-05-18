@@ -15,11 +15,12 @@ advice, please open an issue(paste your log file content).
 ** RoadMap
 
   - [X] manual update
-  - [X] manual open log menu
+  - [X] manual open log file
   - [X] Clipboard crashed
+  - [X] Auto update page(web)
+  - [X] Auto detected update software
   - [ ] Auto open log when application crashed
-  - [ ] Auto update page(web)
-  - [ ] Auto update software
+  - [ ] Add proxy config
 
 ** Build
    You must have *nodejs* environment first, See [[https://nodejs.org/en/][Nodejs]] to how to install.

@@ -13,12 +13,13 @@ issue (贴上你的 log 文件内容)
 
 ** 路线图
 
-  - [X] manual update
-  - [X] manual open log menu
-  - [X] Clipboard crashed
-  - [ ] Auto open log when application crashed
-  - [ ] Auto update page(web)
-  - [ ] Auto update software
+  - [X] 手动更新页面
+  - [X] 手动打开日志文件
+  - [X] 修复剪贴板问题
+  - [X] 自动更新web页面
+  - [X] 自动检测程序更新
+  - [ ] 应用崩溃时自动打开日志
+  - [ ] 增加代理配置
 
 ** 构建
    你的电脑必须首先安装 *nodejs* 环境, 见 [[https://nodejs.org/en/][Nodejs]] 如何安装.

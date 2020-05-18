@@ -1,3 +1,4 @@
+const { shell, dialog } = require('electron');
 const log = require('electron-log');
 const { promisedReadFile, promisedWriteFile } = require('./promisedFs');
 const { getWebPageCommit, getApplicationRelease } = require('./http');
@@ -40,9 +41,41 @@ const autoUpdateWebPage = async () => {
   return [code, isUpdated];
 };
 
-// TODO
-const checkApplicationRelease = () => {
+/**
+ * Auto check Application release and go to download page
+ */
+const checkApplicationRelease = async () => {
   logger.info('checkApplicationRelease fn');
+
+  try {
+    const currentInfo = JSON.parse(await promisedReadFile(getCorrectPath('src/releaseVersion.json')));
+    logger.info('current release version', currentInfo);
+    const latestInfo = await getApplicationRelease();
+    logger.info('latest application release version', latestInfo);
+
+    if (currentInfo.tagName !== latestInfo.tagName) {
+      logger.info('new application release detected');
+      isUpdated = true;
+
+
+      dialog.showMessageBox({
+        type: 'info',
+        detail: 'New application release detected, go to download now?',
+        buttons: ['Confirm', 'Cancel']
+      }).then(res => {
+        logger.info(res);
+
+        // Clicked 'Confirm'
+        if (res.response === 0) {
+          shell.openExternal(
+            'https://github.com/Kreedzt/GFTool-Electron/releases'
+          );
+        }
+      })
+    }
+  } catch(e) {
+    logger.error(e);
+  }
 };
 
 module.exports = {

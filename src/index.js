@@ -345,6 +345,8 @@ function createWindow() {
         detail: 'update page success'
       });
     }
+
+    await checkApplicationRelease();
   })
 
   mainWindow.on('closed', () => {
