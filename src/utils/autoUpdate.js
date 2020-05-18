@@ -9,7 +9,8 @@ const logger = log.scope('autoUpdate.js');
 
 /**
  * Auto check and update web page
- * @return {[Number, Boolean]} [code, isUpdated]: code: check and update res, isUpdated: is success updated
+ * @return {[Number, Boolean]}
+ * [code, isUpdated]: code: check and update res, isUpdated: is success updated
  */
 const autoUpdateWebPage = async () => {
   let code = 0;
@@ -36,7 +37,7 @@ const autoUpdateWebPage = async () => {
         logger.info('write latest web page version info success');
       }
     }
-  } catch(e) {
+  } catch (e) {
     code = -1;
     logger.error(e);
   }
@@ -62,8 +63,6 @@ const checkApplicationRelease = async () => {
 
     if (latestInfo && currentInfo.tagName !== latestInfo.tagName) {
       logger.info('new application release detected');
-      isUpdated = true;
-
 
       dialog.showMessageBox({
         type: 'info',
@@ -78,9 +77,9 @@ const checkApplicationRelease = async () => {
             'https://github.com/Kreedzt/GFTool-Electron/releases'
           );
         }
-      })
+      });
     }
-  } catch(e) {
+  } catch (e) {
     logger.error(e);
   }
 };

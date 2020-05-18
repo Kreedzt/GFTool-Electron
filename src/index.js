@@ -6,14 +6,17 @@ const {
   MenuItem,
   dialog,
   shell,
-  clipboard
+  clipboard,
 } = require('electron');
 const log = require('electron-log');
 const { getCorrectPath } = require('./utils/env');
 const { getWebPageCommit, getApplicationRelease } = require('./utils/http');
 const { clearLog } = require('./utils/clearLog');
 const { isMacOS } = require('./utils/checkOS');
-const { autoUpdateWebPage, checkApplicationRelease } = require('./utils/autoUpdate');
+const {
+  autoUpdateWebPage,
+  checkApplicationRelease,
+} = require('./utils/autoUpdate');
 const { updateRepo } = require('./update');
 const { initializeWindow } = require('./proxyConfig');
 
@@ -36,7 +39,7 @@ const menuTemplate = [
           if (!res) {
             dialog.showMessageBox({
               type: 'error',
-              detail: 'Get latest web page info error'
+              detail: 'Get latest web page info error',
             });
             return;
           }
@@ -44,9 +47,9 @@ const menuTemplate = [
           logger.info('detail', res);
           dialog.showMessageBox({
             type: 'info',
-            detail: `comittedDate:\n${res.committedDate}\n\ncommitId:\n${res.oid}\n\ncommitMessage:\n${res.message}`
+            detail: `comittedDate:\n${res.committedDate}\n\ncommitId:\n${res.oid}\n\ncommitMessage:\n${res.message}`,
           });
-        }
+        },
       },
       {
         label: 'Get latest application release',
@@ -58,7 +61,7 @@ const menuTemplate = [
           if (!res) {
             dialog.showMessageBox({
               type: 'error',
-              detail: 'Get latest release info error'
+              detail: 'Get latest release info error',
             });
             return;
           }
@@ -66,26 +69,11 @@ const menuTemplate = [
           logger.info('detail', res);
           dialog.showMessageBox({
             type: 'info',
-            detail: `version:\n${res.tagName}\n\ncreatedAt:\n${res.createdAt}\n\ndescription:\n${res.description}`
+            detail: `version:\n${res.tagName}\n\ncreatedAt:\n${res.createdAt}\n\ndescription:\n${res.description}`,
           });
-        }
+        },
       },
-      {
-        label: 'Confirm dialog',
-        click: () => {
-          logger.info('Confirm dialog menu');
-          dialog
-            .showMessageBox({
-              type: 'info',
-              detail: 'Confirm dialog menu',
-              buttons: ['Confirm', 'Cancel']
-            })
-            .then(res => {
-              logger.info(res);
-            });
-        }
-      }
-    ]
+    ],
   },
   {
     label: 'Edit',
@@ -101,7 +89,7 @@ const menuTemplate = [
               focusedWindow.webContents
             );
           }
-        }
+        },
       },
       {
         label: 'Cut',
@@ -111,7 +99,7 @@ const menuTemplate = [
             focusedWindow.webContents.cut();
             logger.info('Cut: window contents', focusedWindow.webContents);
           }
-        }
+        },
       },
       {
         label: 'Copy',
@@ -121,7 +109,7 @@ const menuTemplate = [
             focusedWindow.webContents.copy();
             logger.info('Copy: window contents', focusedWindow.webContents);
           }
-        }
+        },
       },
       {
         label: 'Paste',
@@ -131,9 +119,9 @@ const menuTemplate = [
             focusedWindow.webContents.paste();
             logger.info('Paste: window contents', focusedWindow.webContents);
           }
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'Config',
@@ -142,9 +130,9 @@ const menuTemplate = [
         label: 'Proxy',
         click: (item, focusedWindow) => {
           initializeWindow();
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'View',
@@ -163,7 +151,7 @@ const menuTemplate = [
             }
             focusedWindow.reload();
           }
-        }
+        },
       },
       {
         label: 'Toggle Full Screen',
@@ -178,7 +166,7 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
           }
-        }
+        },
       },
       {
         label: 'Toggle always on top',
@@ -187,7 +175,7 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.setAlwaysOnTop(!focusedWindow.isAlwaysOnTop());
           }
-        }
+        },
       },
       {
         label: 'Toggle Developer Tools',
@@ -202,9 +190,9 @@ const menuTemplate = [
           if (focusedWindow) {
             focusedWindow.toggleDevTools();
           }
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'Actions',
@@ -218,10 +206,10 @@ const menuTemplate = [
             clipboard.writeText(url);
             dialog.showMessageBox({
               type: 'info',
-              detail: 'Copy url success! Now you can paste anywhere you want'
+              detail: 'Copy url success! Now you can paste anywhere you want',
             });
           }
-        }
+        },
       },
       {
         label: 'Open current link external',
@@ -231,9 +219,9 @@ const menuTemplate = [
             const url = focusedWindow.webContents.getURL();
             shell.openExternal(url);
           }
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'About',
@@ -249,16 +237,16 @@ const menuTemplate = [
             if (isSuccessful) {
               dialog.showMessageBox({
                 type: 'info',
-                detail: 'update page success'
+                detail: 'update page success',
               });
             } else {
               dialog.showMessageBox({
                 type: 'error',
-                detail: 'update page error'
+                detail: 'update page error',
               });
             }
           }
-        }
+        },
       },
       {
         label: 'Open Logs file',
@@ -266,7 +254,7 @@ const menuTemplate = [
           const logFilePath = log.transports.file.getFile().path;
           logger.info('log file path:', logFilePath);
           shell.openExternal(`file://${logFilePath}`);
-        }
+        },
       },
       {
         label: 'Download latest software',
@@ -274,13 +262,13 @@ const menuTemplate = [
           shell.openExternal(
             'https://github.com/Kreedzt/GFTool-Electron/releases'
           );
-        }
+        },
       },
       {
         label: 'Go to web page',
         click: () => {
           shell.openExternal('https://hycdes.com/');
-        }
+        },
       },
       {
         label: 'Clear log file',
@@ -291,19 +279,19 @@ const menuTemplate = [
             dialog.showMessageBox({
               type: 'info',
               title: 'clear log',
-              detail: 'clear log success'
+              detail: 'clear log success',
             });
           } catch (e) {
             logger.error(e);
           }
-        }
+        },
       },
       {
         label: `Current Version: ${app.getVersion()}`,
-        enabled: false
-      }
-    ]
-  }
+        enabled: false,
+      },
+    ],
+  },
 ];
 
 // Make this app a single instance app.
@@ -342,9 +330,9 @@ function createWindow() {
     width: 1280,
     height: 720,
     webPreferences: {
-      nodeIntegration: false
+      nodeIntegration: false,
     },
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   });
 
   mainWindow.loadFile(targetPath).then(async () => {
@@ -354,12 +342,12 @@ function createWindow() {
       mainWindow.reload();
       dialog.showMessageBox({
         type: 'info',
-        detail: 'update page success'
+        detail: 'update page success',
       });
     }
 
     await checkApplicationRelease();
-  })
+  });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -398,5 +386,5 @@ app.on('activate', () => {
 initialize();
 
 module.exports = {
-  win: mainWindow
+  win: mainWindow,
 };
