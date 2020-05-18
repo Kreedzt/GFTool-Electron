@@ -20,8 +20,11 @@ const autoUpdateWebPage = async () => {
     logger.info('current web page version', currentInfo);
     const latestInfo = await getWebPageCommit();
     logger.info('latest web page version', latestInfo);
-    
-    if (currentInfo.oid !== latestInfo.oid) {
+
+    if (!latestInfo) {
+      logger.error('get latest web page version error');
+    }
+    if (latestInfo && currentInfo.oid !== latestInfo.oid) {
       logger.info('new web page detected, updating...');
       const isSuccess = await updateRepo();
       isUpdated = true;
@@ -53,7 +56,11 @@ const checkApplicationRelease = async () => {
     const latestInfo = await getApplicationRelease();
     logger.info('latest application release version', latestInfo);
 
-    if (currentInfo.tagName !== latestInfo.tagName) {
+    if (!latestInfo) {
+      logger.error('get latest application release version error');
+    }
+
+    if (latestInfo && currentInfo.tagName !== latestInfo.tagName) {
       logger.info('new application release detected');
       isUpdated = true;
 
