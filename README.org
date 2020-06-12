@@ -39,7 +39,7 @@ advice, please open an issue(paste your log file content).
 
    2. Add your GithubToken to ~src/config.js~
       #+begin_src js
-        const AccessToken = 'Your token(detal to Bearer) here'
+        const AccessToken = 'Your token(detal to Basic) here'
       #+end_src
 
    3. Clone web page
